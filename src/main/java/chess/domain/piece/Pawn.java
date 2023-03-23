@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import chess.domain.piece.info.Team;
+import chess.domain.Team;
 
 public class Pawn extends Piece {
 
@@ -30,10 +30,10 @@ public class Pawn extends Piece {
         int diffFile = destination.calculateFileDistance(source);
         int diffRank = destination.calculateRankDistance(source);
 
-        if (team == Team.WHITE) {
-            return Math.abs(diffRank) == DEFAULT_MOVE_RANGE && diffFile == DEFAULT_MOVE_RANGE;
+        if (team == Team.BLACK) {
+            return Math.abs(diffRank) == DEFAULT_MOVE_RANGE && diffFile == -DEFAULT_MOVE_RANGE;
         }
-        return Math.abs(diffRank) == DEFAULT_MOVE_RANGE && diffFile == -DEFAULT_MOVE_RANGE;
+        return Math.abs(diffRank) == DEFAULT_MOVE_RANGE && diffFile == DEFAULT_MOVE_RANGE;
     }
 }
 

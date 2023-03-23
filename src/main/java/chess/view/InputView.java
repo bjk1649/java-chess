@@ -13,12 +13,6 @@ public class InputView {
         this.scanner = scanner;
     }
 
-    public String readStart() {
-        return scanner.nextLine()
-                .trim()
-                .toLowerCase();
-    }
-
     public List<String> readCommandAndParameters() {
         return Arrays.stream(scanner.nextLine()
                         .trim()

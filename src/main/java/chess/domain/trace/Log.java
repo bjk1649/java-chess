@@ -1,4 +1,4 @@
-package chess.domain.piece.info;
+package chess.domain.trace;
 
 import chess.domain.Turn;
 import chess.domain.position.Position;

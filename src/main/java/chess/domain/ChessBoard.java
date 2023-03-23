@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.piece.info.Team;
 import chess.domain.position.Position;
 import java.math.BigInteger;
 import java.util.List;
@@ -102,4 +101,5 @@ public class ChessBoard {
     public List<Square> getSquares() {
         return squares;
     }
+
 }

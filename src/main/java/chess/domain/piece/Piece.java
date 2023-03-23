@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.Turn;
-import chess.domain.piece.info.Team;
-import chess.domain.piece.info.Trace;
+import chess.domain.Team;
+import chess.domain.trace.Trace;
 import chess.domain.position.Position;
 
 public abstract class Piece {

@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import chess.domain.piece.info.Team;
+import chess.domain.Team;
 
 public class King extends Piece {
 
@@ -10,7 +10,6 @@ public class King extends Piece {
     public King(Team team) {
         super(team);
     }
-
 
     @Override
     public boolean canMove(final Position source, final Position destination) {

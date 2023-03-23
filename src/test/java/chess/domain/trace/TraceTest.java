@@ -1,4 +1,4 @@
-package chess.domain.piece.info;
+package chess.domain.trace;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,7 +20,7 @@ public class TraceTest {
             Trace trace = new Trace();
 
             //when
-            trace.add(new Turn(), Position.of(Rank.A, File.TWO));
+            trace.add(new Turn(), Position.of(File.A, Rank.TWO));
 
             //then
             assertThat(trace).extracting("logs", InstanceOfAssertFactories.collection(Position.class))
@@ -35,7 +35,7 @@ public class TraceTest {
         void should_true반환_when_움직인기록이있다면() {
             //given
             Trace trace = new Trace();
-            trace.add(new Turn(), Position.of(Rank.A, File.TWO));
+            trace.add(new Turn(), Position.of(File.A, Rank.TWO));
 
             //when
             boolean actual = trace.isEmpty();

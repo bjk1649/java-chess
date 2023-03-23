@@ -3,7 +3,6 @@ package chess.domain;
 import chess.domain.piece.King;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
-import chess.domain.piece.info.Team;
 import chess.domain.position.Position;
 
 public class Square {

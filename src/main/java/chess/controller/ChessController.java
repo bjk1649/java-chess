@@ -1,9 +1,11 @@
 package chess.controller;
 
+import chess.domain.ChessBoardFactory;
 import chess.domain.ChessGame;
+import chess.controller.command.Command;
+import chess.controller.command.CommandFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.List;
 
 public class ChessController {
 
@@ -17,33 +19,20 @@ public class ChessController {
 
     public void run() {
         outputView.printGameGuide();
-        ChessGame chessGame = createChessGame();
-        outputView.printChessBoard(new ChessBoardDto(chessGame.getChessBoard()));
-        while (chessGame.isRunning()) {
-            executeTurn(chessGame);
+        ChessGame chessGame = new ChessGame(ChessBoardFactory.create());
+        while (chessGame.isNotEnd()) {
+            executeCommand(chessGame);
         }
     }
 
-    private ChessGame createChessGame() {
+    private void executeCommand(final ChessGame chessGame) {
         try {
-            String command = inputView.readStart();
-            return ChessGame.startNewGame(command);
-        }
-        catch (IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
-            return createChessGame();
-        }
-    }
-
-    private void executeTurn(final ChessGame chessGame) {
-        try {
-            List<String> commandAndParameters = inputView.readCommandAndParameters();
-            chessGame.executeCommand(commandAndParameters);
+            Command command = CommandFactory.from(inputView.readCommandAndParameters());
+            command.execute(chessGame);
             outputView.printChessBoard(new ChessBoardDto(chessGame.getChessBoard()));
-        }
-        catch (IllegalArgumentException | UnsupportedOperationException e) {
+        } catch (IllegalArgumentException | UnsupportedOperationException e) {
             outputView.printError(e.getMessage());
-            executeTurn(chessGame);
+            executeCommand(chessGame);
         }
     }
 
