@@ -32,4 +32,12 @@ public class Piece {
         this.type = type;
         this.team = team;
     }
+
+    public Type getType() {
+        return type;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
 }
