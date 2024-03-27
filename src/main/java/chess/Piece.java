@@ -1,12 +1,35 @@
 package chess;
 
 public class Piece {
-    private final String name;
-    private final String team;
-
-    public Piece(String name, String team) {
-        this.name = name;
-        this.team = team;
+    public enum Team {
+        BLACK,
+        WHITE
     }
 
+    public enum Type {
+        KING("K"),
+        QUEEN("Q"),
+        BISHOP("B"),
+        KNIGHT("N"),
+        ROOK("R"),
+        PAWN("P");
+
+        private final String symbol;
+
+        Type(String symbol) {
+            this.symbol = symbol;
+        }
+
+        public String getSymbol() {
+            return symbol;
+        }
+    }
+
+    private final Type type;
+    private final Team team;
+
+    public Piece(Type type, Team team) {
+        this.type = type;
+        this.team = team;
+    }
 }
