@@ -6,8 +6,9 @@ import org.junit.jupiter.api.Test;
 
 public class BoardTest {
     @Test
-    void createNewBoardTest() {
+    void initializeBoard() {
         Board testBoard = new Board();
-        assertThat(testBoard).isNotNull();;
+        testBoard.initializeBoard();
+        assertThat(testBoard).isNotNull();
     }
 }
