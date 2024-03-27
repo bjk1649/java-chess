@@ -3,7 +3,7 @@ package chess;
 public class Piece {
     public enum Team {
         BLACK,
-        WHITE
+        WHITE;
     }
 
     public enum Type {
