@@ -18,7 +18,6 @@ public class ChessGameManager {
         }
     }
 
-
     public void proceedGame(Board board) {
         while (!InputView.inputCommand().equals(END_COMMAND)) {
 
