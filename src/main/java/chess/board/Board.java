@@ -9,6 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
+    private static final int FIRST_FILE = 1;
+    private static final int LAST_FILE = 8;
+    private static final int FIRST_RANK = 1;
+    private static final int LAST_RANK = 8;
+
     private final Map<Position, Piece> board; //좌표, 기물종류
 
     public Board() {
@@ -29,7 +34,7 @@ public class Board {
         board.put(new Position(6, 8), new Piece(Type.BISHOP, Team.BLACK));
         board.put(new Position(7, 8), new Piece(Type.KNIGHT, Team.BLACK));
         board.put(new Position(8, 8), new Piece(Type.ROOK, Team.BLACK));
-        for(int file = 1; file <= 8; file++) {
+        for(int file = FIRST_FILE; file <= LAST_FILE; file++) {
             board.put(new Position(file, 7), new Piece(Type.PAWN, Team.BLACK));
         }
     }
@@ -43,7 +48,7 @@ public class Board {
         board.put(new Position(6, 1), new Piece(Type.BISHOP, Team.WHITE));
         board.put(new Position(7, 1), new Piece(Type.KNIGHT, Team.WHITE));
         board.put(new Position(8, 1), new Piece(Type.ROOK, Team.WHITE));
-        for(int file = 1; file <= 8; file++) {
+        for(int file = FIRST_FILE; file <= LAST_FILE; file++) {
             board.put(new Position(file, 2), new Piece(Type.PAWN, Team.WHITE));
         }
     }
