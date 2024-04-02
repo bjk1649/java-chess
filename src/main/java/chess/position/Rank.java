@@ -24,4 +24,8 @@ public enum Rank {
                 .findAny()
                 .orElse(null);
     }
+
+    public int value() {
+        return value;
+    }
 }

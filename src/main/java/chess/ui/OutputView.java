@@ -3,6 +3,7 @@ package chess.ui;
 import chess.board.Board;
 import chess.piece.Piece;
 import chess.position.Position;
+import chess.position.Rank;
 
 public class OutputView {
     public static void printStartMessage() {
@@ -12,14 +13,14 @@ public class OutputView {
 
     public static void printBoard(Board board) {
         for (int rank = Position.LAST_RANK; rank >= Position.FIRST_RANK; rank--) {
-            printOneRank(board, rank);
+            printOneRank(board, Rank.findByValue(rank));
             System.out.println();
         }
     }
 
-    private static void printOneRank(Board board, int rank) {
+    private static void printOneRank(Board board, Rank rank) {
         for (int file = Position.FIRST_FILE; file <= Position.LAST_FILE; file++) {
-            Position position = new Position(file, rank);
+            Position position = new Position(file, rank.value());
             Piece piece = board.findPiece(position);
             printOnePiece(piece);
         }
