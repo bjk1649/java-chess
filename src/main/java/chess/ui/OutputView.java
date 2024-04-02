@@ -20,7 +20,7 @@ public class OutputView {
     private static void printOneRank(Board board, int rank) {
         for (int file = Position.FIRST_FILE; file <= Position.LAST_FILE; file++) {
             Position position = new Position(file, rank);
-            Piece piece = board.getPiece(position);
+            Piece piece = board.findPiece(position);
             printOnePiece(piece);
         }
     }
