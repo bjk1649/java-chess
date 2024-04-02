@@ -4,16 +4,19 @@ public class Piece {
     private final Type type;
     private final Team team;
 
-    public Piece(Type type, Team team) {
+    public Piece(final Type type, final Team team) {
         this.type = type;
         this.team = team;
     }
 
-    public Type getType() {
-        return type;
+    public String convertTypeToSymbol(Piece piece) {
+        if (piece.team.equals(Team.WHITE)) {
+            return convertToLowercase(piece.type.extractFirstLetter());
+        }
+        return piece.type.extractFirstLetter();
     }
 
-    public Team getTeam() {
-        return team;
+    public String convertToLowercase(String symbol) {
+        return symbol.toLowerCase();
     }
 }

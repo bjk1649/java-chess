@@ -7,4 +7,8 @@ public enum Type {
     KNIGHT,
     ROOK,
     PAWN;
+
+    public String extractFirstLetter() {
+        return this.name().substring(0, 1);
+    }
 }

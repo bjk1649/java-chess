@@ -1,26 +1,25 @@
 package chess.ui;
 
-import chess.Board;
-import chess.Piece;
-import chess.Position;
+import chess.board.Board;
+import chess.piece.Piece;
+import chess.position.Position;
 
 public class OutputView {
-
     public static void printStartMessage() {
         System.out.println("체스 게임을 시작합니다.");
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
     }
 
     public static void printBoard(Board board) {
-        for (int row = 8; row >= 1; row--) {
-            printOneRow(board, row);
+        for (int rank = Position.LAST_RANK; rank >= Position.FIRST_RANK; rank--) {
+            printOneRank(board, rank);
             System.out.println();
         }
     }
 
-    private static void printOneRow(Board board, int row) {
-        for (char col = 'A'; col <= 'H'; col++) {
-            Position position = new Position(col, row);
+    private static void printOneRank(Board board, int rank) {
+        for (int file = Position.FIRST_FILE; file <= Position.LAST_FILE; file++) {
+            Position position = new Position(file, rank);
             Piece piece = board.getPiece(position);
             printOnePiece(piece);
         }
@@ -34,13 +33,6 @@ public class OutputView {
         if (piece == null) {
             return ".";
         }
-        return convertSymbolFormat(piece);
-    }
-
-    private static String convertSymbolFormat(Piece piece) {
-        if (piece.getTeam().equals(Piece.Team.WHITE)) {
-            return piece.getType().getSymbol().toLowerCase();
-        }
-        return piece.getType().getSymbol();
+        return piece.convertTypeToSymbol(piece);
     }
 }
