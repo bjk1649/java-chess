@@ -16,39 +16,39 @@ public class Board {
     }
 
     public void initializeBoard() {
-        setBlackPiece();
-        setWhitePiece();
+        initializeBlackPiece();
+        initializeWhitePiece();
+    }
+
+    private void initializeBlackPiece() {
+        board.put(new Position(1, 8), new Piece(Type.ROOK, Team.BLACK));
+        board.put(new Position(2, 8), new Piece(Type.KNIGHT, Team.BLACK));
+        board.put(new Position(3, 8), new Piece(Type.BISHOP, Team.BLACK));
+        board.put(new Position(4, 8), new Piece(Type.QUEEN, Team.BLACK));
+        board.put(new Position(5, 8), new Piece(Type.KING, Team.BLACK));
+        board.put(new Position(6, 8), new Piece(Type.BISHOP, Team.BLACK));
+        board.put(new Position(7, 8), new Piece(Type.KNIGHT, Team.BLACK));
+        board.put(new Position(8, 8), new Piece(Type.ROOK, Team.BLACK));
+        for(int file = 1; file <= 8; file++) {
+            board.put(new Position(file, 7), new Piece(Type.PAWN, Team.BLACK));
+        }
+    }
+
+    private void initializeWhitePiece() {
+        board.put(new Position(1, 1), new Piece(Type.ROOK, Team.WHITE));
+        board.put(new Position(2, 1), new Piece(Type.KNIGHT, Team.WHITE));
+        board.put(new Position(3, 1), new Piece(Type.BISHOP, Team.WHITE));
+        board.put(new Position(4, 1), new Piece(Type.KING, Team.WHITE));
+        board.put(new Position(5, 1), new Piece(Type.QUEEN, Team.WHITE));
+        board.put(new Position(6, 1), new Piece(Type.BISHOP, Team.WHITE));
+        board.put(new Position(7, 1), new Piece(Type.KNIGHT, Team.WHITE));
+        board.put(new Position(8, 1), new Piece(Type.ROOK, Team.WHITE));
+        for(int file = 1; file <= 8; file++) {
+            board.put(new Position(file, 2), new Piece(Type.PAWN, Team.WHITE));
+        }
     }
 
     public Piece getPiece(Position position) {
         return board.get(position);
-    }
-
-    private void setBlackPiece() {
-        board.put(new Position('A', 8), new Piece(Piece.Type.ROOK, Piece.Team.BLACK));
-        board.put(new Position('B', 8), new Piece(Piece.Type.KNIGHT, Piece.Team.BLACK));
-        board.put(new Position('C', 8), new Piece(Piece.Type.BISHOP, Piece.Team.BLACK));
-        board.put(new Position('D', 8), new Piece(Piece.Type.QUEEN, Piece.Team.BLACK));
-        board.put(new Position('E', 8), new Piece(Piece.Type.KING, Piece.Team.BLACK));
-        board.put(new Position('F', 8), new Piece(Piece.Type.BISHOP, Piece.Team.BLACK));
-        board.put(new Position('G', 8), new Piece(Piece.Type.KNIGHT, Piece.Team.BLACK));
-        board.put(new Position('H', 8), new Piece(Piece.Type.ROOK, Piece.Team.BLACK));
-        for(char row = 'A'; row <= 'H'; row++) {
-            board.put(new Position(row, 7), new Piece(Piece.Type.PAWN, Piece.Team.BLACK));
-        }
-    }
-
-    private void setWhitePiece() {
-        board.put(new Position('A', 1), new Piece(Piece.Type.ROOK, Piece.Team.WHITE));
-        board.put(new Position('B', 1), new Piece(Piece.Type.KNIGHT, Piece.Team.WHITE));
-        board.put(new Position('C', 1), new Piece(Piece.Type.BISHOP, Piece.Team.WHITE));
-        board.put(new Position('D', 1), new Piece(Piece.Type.KING, Piece.Team.WHITE));
-        board.put(new Position('E', 1), new Piece(Piece.Type.QUEEN, Piece.Team.WHITE));
-        board.put(new Position('F', 1), new Piece(Piece.Type.BISHOP, Piece.Team.WHITE));
-        board.put(new Position('G', 1), new Piece(Piece.Type.KNIGHT, Piece.Team.WHITE));
-        board.put(new Position('H', 1), new Piece(Piece.Type.ROOK, Piece.Team.WHITE));
-        for(char row = 'A'; row <= 'H'; row++) {
-            board.put(new Position(row, 2), new Piece(Piece.Type.PAWN, Piece.Team.WHITE));
-        }
     }
 }
