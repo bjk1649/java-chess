@@ -22,6 +22,6 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.value == label)
                 .findAny()
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 File 입력입니다(1~8)"));
     }
 }
