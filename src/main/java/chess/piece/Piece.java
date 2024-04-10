@@ -9,14 +9,11 @@ public class Piece {
         this.team = team;
     }
 
-    public String convertTypeToSymbol(Piece piece) {
-        if (piece.team.equals(Team.WHITE)) {
-            return convertToLowercase(piece.type.extractFirstLetter());
-        }
-        return piece.type.extractFirstLetter();
+    public Type getType() {
+        return type;
     }
 
-    public String convertToLowercase(String symbol) {
-        return symbol.toLowerCase();
+    public Team getTeam() {
+        return team;
     }
 }
