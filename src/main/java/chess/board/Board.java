@@ -4,6 +4,7 @@ import chess.piece.Type;
 import chess.piece.Team;
 import chess.position.Position;
 import chess.piece.Piece;
+import chess.position.StartPiecePosition;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,30 +23,30 @@ public class Board {
     }
 
     private void initializeBlackPiece() {
-        board.put(new Position(1, 8), new Piece(Type.ROOK, Team.BLACK));
-        board.put(new Position(2, 8), new Piece(Type.KNIGHT, Team.BLACK));
-        board.put(new Position(3, 8), new Piece(Type.BISHOP, Team.BLACK));
-        board.put(new Position(4, 8), new Piece(Type.KING, Team.BLACK));
-        board.put(new Position(5, 8), new Piece(Type.QUEEN, Team.BLACK));
-        board.put(new Position(6, 8), new Piece(Type.BISHOP, Team.BLACK));
-        board.put(new Position(7, 8), new Piece(Type.KNIGHT, Team.BLACK));
-        board.put(new Position(8, 8), new Piece(Type.ROOK, Team.BLACK));
+        board.put(StartPiecePosition.BLACK_ROOK_LEFT.getPosition(), new Piece(Type.ROOK, Team.BLACK));
+        board.put(StartPiecePosition.BLACK_KNIGHT_LEFT.getPosition(), new Piece(Type.KNIGHT, Team.BLACK));
+        board.put(StartPiecePosition.BLACK_BISHOP_LEFT.getPosition(), new Piece(Type.BISHOP, Team.BLACK));
+        board.put(StartPiecePosition.BLACK_KING.getPosition(), new Piece(Type.KING, Team.BLACK));
+        board.put(StartPiecePosition.BLACK_QUEEN.getPosition(), new Piece(Type.QUEEN, Team.BLACK));
+        board.put(StartPiecePosition.BLACK_BISHOP_RIGHT.getPosition(), new Piece(Type.BISHOP, Team.BLACK));
+        board.put(StartPiecePosition.BLACK_KNIGHT_RIGHT.getPosition(), new Piece(Type.KNIGHT, Team.BLACK));
+        board.put(StartPiecePosition.BLACK_ROOK_RIGHT.getPosition(), new Piece(Type.ROOK, Team.BLACK));
         for (int file = Position.FIRST_FILE; file <= Position.LAST_FILE; file++) {
-            board.put(new Position(file, 7), new Piece(Type.PAWN, Team.BLACK));
+            board.put(new Position(file, Position.BLACK_PAWN_RANK), new Piece(Type.PAWN, Team.BLACK));
         }
     }
 
     private void initializeWhitePiece() {
-        board.put(new Position(1, 1), new Piece(Type.ROOK, Team.WHITE));
-        board.put(new Position(2, 1), new Piece(Type.KNIGHT, Team.WHITE));
-        board.put(new Position(3, 1), new Piece(Type.BISHOP, Team.WHITE));
-        board.put(new Position(4, 1), new Piece(Type.KING, Team.WHITE));
-        board.put(new Position(5, 1), new Piece(Type.QUEEN, Team.WHITE));
-        board.put(new Position(6, 1), new Piece(Type.BISHOP, Team.WHITE));
-        board.put(new Position(7, 1), new Piece(Type.KNIGHT, Team.WHITE));
-        board.put(new Position(8, 1), new Piece(Type.ROOK, Team.WHITE));
+        board.put(StartPiecePosition.WHITE_ROOK_LEFT.getPosition(), new Piece(Type.ROOK, Team.WHITE));
+        board.put(StartPiecePosition.WHITE_KNIGHT_LEFT.getPosition(), new Piece(Type.KNIGHT, Team.WHITE));
+        board.put(StartPiecePosition.WHITE_BISHOP_LEFT.getPosition(), new Piece(Type.BISHOP, Team.WHITE));
+        board.put(StartPiecePosition.WHITE_KING.getPosition(), new Piece(Type.KING, Team.WHITE));
+        board.put(StartPiecePosition.WHITE_QUEEN.getPosition(), new Piece(Type.QUEEN, Team.WHITE));
+        board.put(StartPiecePosition.WHITE_BISHOP_RIGHT.getPosition(), new Piece(Type.BISHOP, Team.WHITE));
+        board.put(StartPiecePosition.WHITE_KNIGHT_RIGHT.getPosition(), new Piece(Type.KNIGHT, Team.WHITE));
+        board.put(StartPiecePosition.WHITE_ROOK_RIGHT.getPosition(), new Piece(Type.ROOK, Team.WHITE));
         for (int file = Position.FIRST_FILE; file <= Position.LAST_FILE; file++) {
-            board.put(new Position(file, 2), new Piece(Type.PAWN, Team.WHITE));
+            board.put(new Position(file, Position.WHITE_PAWN_RANK), new Piece(Type.PAWN, Team.WHITE));
         }
     }
 
