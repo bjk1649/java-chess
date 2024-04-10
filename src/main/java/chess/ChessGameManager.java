@@ -12,7 +12,6 @@ public class ChessGameManager {
         OutputView.printStartMessage();
         if (InputView.inputCommand().equals(START_COMMAND)) {
             Board board = new Board();
-            board.initializeBoard();
             OutputView.printBoard(board);
             proceedGame(board);
         }

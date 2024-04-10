@@ -13,6 +13,7 @@ public class Board {
 
     public Board() {
         this.board = new HashMap<>();
+        initializeBoard();
     }
 
     public void initializeBoard() {
