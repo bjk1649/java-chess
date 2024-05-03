@@ -17,7 +17,7 @@ public class Board {
         initializeBoard();
     }
 
-    public void initializeBoard() {
+    private void initializeBoard() {
         initializeBlackPiece();
         initializeWhitePiece();
     }
