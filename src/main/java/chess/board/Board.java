@@ -50,6 +50,12 @@ public class Board {
         }
     }
 
+    public void movePiece(Position start, Position target) {
+        //checkPath();
+        board.put(target, findPiece(start));
+        board.remove(start);
+    }
+
     public Piece findPiece(Position position) {
         return board.get(position);
     }
