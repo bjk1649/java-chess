@@ -1,18 +1,27 @@
 package chess.ui;
 
-import chess.piece.Piece;
-import chess.piece.Team;
+import chess.piece.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ExtractPieceSymbol {
+    private static final Map<Class<?>, String> symbolMap = new HashMap<>();
 
-    public static String convertTypeToSymbol(Piece piece) {
-        if (piece.getTeam().equals(Team.WHITE)) {
-            return convertToLowercase(piece.getType().extractFirstLetter());
-        }
-        return piece.getType().extractFirstLetter();
+    static {
+        symbolMap.put(Pawn.class, "P");
+        symbolMap.put(Rook.class, "R");
+        symbolMap.put(Bishop.class, "B");
+        symbolMap.put(Knight.class, "N");
+        symbolMap.put(Queen.class, "Q");
+        symbolMap.put(King.class, "K");
     }
 
-    public static String convertToLowercase(String symbol) {
-        return symbol.toLowerCase();
+    public static String convertTypeToSymbol(Piece piece) {
+        String symbol = symbolMap.get(piece.getClass());
+
+        if (piece.getTeam() == Team.WHITE) {
+            return symbol.toLowerCase();
+        }
+        return symbol;
     }
 }
