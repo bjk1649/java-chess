@@ -14,12 +14,12 @@ public class Position {
     private final Rank rank;
 
     public Position(int file, int rank) {
-        checkPosition(file, rank);
+        checkPositionRange(file, rank);
         this.file = File.findByValue(file);
         this.rank = Rank.findByValue(rank);
     }
 
-    public void checkPosition(int file, int rank) {
+    public void checkPositionRange(int file, int rank) {
         if (file < FIRST_FILE || file > LAST_FILE || rank < FIRST_RANK || rank > LAST_RANK) {
             throw new IllegalArgumentException("범위를 벗어난 위치입니다.(1~8)");
         }
