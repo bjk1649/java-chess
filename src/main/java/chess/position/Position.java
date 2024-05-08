@@ -41,6 +41,20 @@ public class Position {
         return movement.nextPosition(file, rank);
     }
 
+    public boolean onInitialWhitePawnRank(Team team) {
+        if (team.isSameTeam(Team.WHITE)) {
+            return this.rank.value() == WHITE_PAWN_INITIAL_RANK;
+        }
+        return false;
+    }
+
+    public boolean onInitialBlackPawnRank(Team team) {
+        if (team.isSameTeam(Team.BLACK)) {
+            return this.rank.value() == BLACK_PAWN_INITIAL_RANK;
+        }
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
