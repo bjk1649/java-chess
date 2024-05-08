@@ -41,6 +41,10 @@ public enum Movement {
                 .orElseThrow(() -> new IllegalArgumentException("해당 기물이 이동할 수 없는 방향입니다."));
     }
 
+    public Position nextPosition(int file, int rank) {
+        return new Position(this.file + file, this.rank + rank);
+    }
+
     public int file() {
         return this.file;
     }
