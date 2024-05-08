@@ -25,6 +25,14 @@ public class Position {
         }
     }
 
+    public static int fileGap(Position start, Position target) {
+        return File.calculateFileGap(start.file, target.file);
+    }
+
+    public static int rankGap(Position start, Position target) {
+        return Rank.calculateRankGap(start.rank, target.rank);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

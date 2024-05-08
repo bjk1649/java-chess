@@ -1,5 +1,10 @@
 package chess.move;
 
+import chess.position.Position;
+import chess.position.Rank;
+
+import java.util.Arrays;
+
 public enum Movement {
     UP(0,1),
     DOWN(0,-1),
@@ -16,7 +21,9 @@ public enum Movement {
     RIGHT_RIGHT_UP(2,1),
     RIGHT_RIGHT_DOWN(2,-1),
     LEFT_LEFT_UP(-2,1),
-    LEFT_LEFT_DOWN(-2,-1);
+    LEFT_LEFT_DOWN(-2,-1),
+    UP_UP(0,2),
+    DOWN_DOWN(0,-2);
 
     private final int file;
     private final int rank;
@@ -24,5 +31,17 @@ public enum Movement {
     Movement(final int file, final int rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static Movement findMovementDirection(int file, int rank) {
+        return Arrays.stream(values())
+                .filter(movement -> movement.file == file
+                        && movement.rank == rank)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 기물이 이동할 수 없는 방향입니다."));
+    }
+
+    public int file() {
+        return this.file;
     }
 }
