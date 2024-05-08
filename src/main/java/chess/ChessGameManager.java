@@ -44,6 +44,7 @@ public class ChessGameManager {
 
         verifyTurn(board.findPiece(start).getTeam());
         board.movePiece(start, target);
+        turn = turn.changeTurn();
     }
 
     public Position searchPosition(String location) {
