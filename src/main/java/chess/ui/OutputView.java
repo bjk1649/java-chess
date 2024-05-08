@@ -18,6 +18,7 @@ public class OutputView {
             printOneRank(board, Rank.findByValue(rank));
             System.out.println();
         }
+        System.out.println();
     }
 
     private static void printOneRank(Board board, Rank rank) {
