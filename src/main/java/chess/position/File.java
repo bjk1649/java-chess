@@ -1,6 +1,7 @@
 package chess.position;
 
 import java.util.Arrays;
+import chess.position.Position;
 
 public enum File {
     A(1),
@@ -23,5 +24,13 @@ public enum File {
                 .filter(file -> file.value == label)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 File 입력입니다(1~8)"));
+    }
+
+    public static int calculateFileGap(File start, File target) {
+        return target.value - start.value;
+    }
+
+    public int value() {
+        return value;
     }
 }
