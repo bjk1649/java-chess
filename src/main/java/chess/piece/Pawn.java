@@ -19,6 +19,25 @@ public class Pawn extends Piece {
         super(team);
     }
 
+    @Override
+    public List<Position> findPath(Position start, Position target, int fileGap, int rankGap) {
+        List<Position> positions = new ArrayList<>();
+        List<Movement> movements = new ArrayList<>();
+        if (this.getTeam().equals(Team.WHITE)) {
+            movements.addAll(updateWhitePawnMovableDirection(start));
+            Movement movement = findMovementDirection(fileGap, rankGap);
+            verifyMovement(movements, movement);
+            positions = findPawnPath(start, movement);
+        }
+        if (this.getTeam().equals(Team.BLACK)) {
+            movements.addAll(updateBlackPawnMovableDirection(start));
+            Movement movement = findMovementDirection(fileGap, rankGap);
+            verifyMovement(movements, movement);
+            positions = findPawnPath(start, movement);
+        }
+        return positions;
+    }
+
     private List<Movement> updateWhitePawnMovableDirection(Position start) {
         List<Movement> movements = new ArrayList<>();
 
@@ -39,5 +58,12 @@ public class Pawn extends Piece {
         }
         movements.addAll(BLACK_PAWN_MOVABLE_DIRECTION);
         return movements;
+    }
+
+    private List<Position> findPawnPath(Position start, Movement movement) {
+        List<Position> positions = new ArrayList<>();
+        Position next = start.findNextPosition(movement);
+        positions.add(next);
+        return positions;
     }
 }
