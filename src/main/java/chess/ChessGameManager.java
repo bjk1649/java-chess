@@ -4,37 +4,45 @@ import chess.board.Board;
 import chess.ui.InputView;
 import chess.ui.OutputView;
 import chess.position.Position;
+import chess.piece.Team;
 import java.util.List;
 
 public class ChessGameManager {
     private static final String START_COMMAND = "start";
     private static final String END_COMMAND = "end";
+    private Team turn = Team.WHITE;
 
     public void startNewGame() {
         OutputView.printStartMessage();
         if (InputView.inputCommand().equals(START_COMMAND)) {
             Board board = new Board();
             OutputView.printBoard(board);
-            proceedGame(board);
+            while (true) {
+                if (proceedGame(board).equals(END_COMMAND)) {
+                    break;
+                }
+            }
         }
     }
 
-    public void proceedGame(Board board) {
+    public String proceedGame(Board board) {
         String command = InputView.inputCommand();
         if (!command.equals(END_COMMAND)) {
-            moveprocess(board, InputView.extractMovePath(command));
+            moveProcess(board, InputView.extractMovePath(command));
             OutputView.printBoard(board);
             proceedGame(board);
         }
         if (command.equals(END_COMMAND)) {
             System.out.println("게임 종료");
         }
+        return command;
     }
 
-    public void moveprocess(Board board, List<String> locationList) {
-        Position start = searchPosition(locationList.get(0));
-        Position target = searchPosition(locationList.get(1));
+    public void moveProcess(Board board, List<String> locations) {
+        Position start = searchPosition(locations.get(0));
+        Position target = searchPosition(locations.get(1));
 
+        verifyTurn(board.findPiece(start).getTeam());
         board.movePiece(start, target);
     }
 
@@ -43,5 +51,11 @@ public class ChessGameManager {
         int rank = location.charAt(1) - '0';
 
         return new Position(file, rank);
+    }
+
+    public void verifyTurn(Team team) {
+        if (!team.isSameTeam(turn)) {
+            throw new IllegalArgumentException("상대방 기물을 이동시킬 수 없습니다.");
+        }
     }
 }
