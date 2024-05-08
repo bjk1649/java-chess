@@ -4,6 +4,7 @@ import chess.piece.*;
 import chess.position.Position;
 import chess.position.StartPiecePosition;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -50,6 +51,19 @@ public class Board {
     public void movePiece(Position start, Position target) {
         this.board.put(target, findPiece(start));
         this.board.remove(start);
+    }
+
+    public void verifyPath(Position start, Position target) {
+        int fileGap = Position.fileGap(start, target);
+        int rankGap = Position.rankGap(start, target);
+        Piece selectedPiece = findPiece(start);
+        Piece targetPiece = findPiece(target);
+        if (selectedPiece instanceof Pawn) {
+            selectedPiece.checkTargetPositionByPawn(targetPiece, fileGap);
+        }
+        if (targetPiece != null) {
+            selectedPiece.checkTargetPosition(targetPiece);
+        }
     }
 
     public Piece findPiece(Position position) {
