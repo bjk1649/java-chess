@@ -1,5 +1,7 @@
 package chess.position;
 
+import chess.move.Movement;
+import chess.piece.Team;
 import java.util.Objects;
 
 public class Position {
@@ -31,6 +33,12 @@ public class Position {
 
     public static int rankGap(Position start, Position target) {
         return Rank.calculateRankGap(start.rank, target.rank);
+    }
+
+    public Position findNextPosition(Movement movement) {
+        int file = this.file.value();
+        int rank = this.rank.value();
+        return movement.nextPosition(file, rank);
     }
 
     @Override
