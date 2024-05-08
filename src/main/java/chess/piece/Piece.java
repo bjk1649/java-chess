@@ -40,4 +40,10 @@ public abstract class Piece {
             throw new IllegalArgumentException("폰은 정면에 있는 상대 기물을 공격할 수 없습니다.");
         }
     }
+
+    public void verifyMovement(List<Movement> movableDirections, Movement movement) {
+        if (!movableDirections.contains(movement)) {
+            throw new IllegalArgumentException("해당 기물이 이동할 수 있는 범위를 벗어났습니다.");
+        }
+    }
 }
