@@ -64,6 +64,18 @@ public class Board {
         if (targetPiece != null) {
             selectedPiece.checkTargetPosition(targetPiece);
         }
+
+        List<Position> positions = selectedPiece.findPath(start, target, fileGap, rankGap);
+
+        for (Position position : positions) {
+            checkPositionIsEmpty(position, target);
+        }
+    }
+
+    public void checkPositionIsEmpty(Position position, Position target) {
+        if (this.findPiece(position) != null && !position.equals(target)) {
+            throw new IllegalArgumentException("다른 기물이 존재해서 지나갈 수 없습니다.");
+        }
     }
 
     public Piece findPiece(Position position) {
