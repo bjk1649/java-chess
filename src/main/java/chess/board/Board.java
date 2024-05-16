@@ -54,8 +54,8 @@ public class Board {
     }
 
     public void verifyPath(Position start, Position target) {
-        int fileGap = Position.fileGap(start, target);
-        int rankGap = Position.rankGap(start, target);
+        int fileGap = start.fileGap(target);
+        int rankGap = start.rankGap(target);
         Piece selectedPiece = findPiece(start);
         Piece targetPiece = findPiece(target);
         if (selectedPiece instanceof Pawn) {
