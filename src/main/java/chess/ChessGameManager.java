@@ -17,15 +17,11 @@ public class ChessGameManager {
         if (InputView.inputCommand().equals(START_COMMAND)) {
             Board board = new Board();
             OutputView.printBoard(board);
-            while (true) {
-                if (proceedGame(board).equals(END_COMMAND)) {
-                    break;
-                }
-            }
+            proceedGame(board);
         }
     }
 
-    public String proceedGame(Board board) {
+    public void proceedGame(Board board) {
         String command = InputView.inputCommand();
         if (!command.equals(END_COMMAND)) {
             moveProcess(board, InputView.extractMovePath(command));
@@ -35,7 +31,6 @@ public class ChessGameManager {
         if (command.equals(END_COMMAND)) {
             System.out.println("게임 종료");
         }
-        return command;
     }
 
     public void moveProcess(Board board, List<String> locations) {
