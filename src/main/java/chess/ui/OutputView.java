@@ -37,6 +37,6 @@ public class OutputView {
         if (piece == null) {
             return ".";
         }
-        return ExtractPieceSymbol.convertTypeToSymbol(piece);
+        return PieceSymbol.convertTypeToSymbol(piece);
     }
 }

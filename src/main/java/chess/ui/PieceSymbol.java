@@ -4,7 +4,7 @@ import chess.piece.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ExtractPieceSymbol {
+public class PieceSymbol {
     private static final Map<Class<?>, String> symbolMap = new HashMap<>();
 
     static {
