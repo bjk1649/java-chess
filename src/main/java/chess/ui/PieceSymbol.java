@@ -16,6 +16,9 @@ public class PieceSymbol {
         symbolMap.put(King.class, "K");
     }
 
+    private PieceSymbol() {
+    }
+
     public static String convertTypeToSymbol(Piece piece) {
         String symbol = symbolMap.get(piece.getClass());
 
