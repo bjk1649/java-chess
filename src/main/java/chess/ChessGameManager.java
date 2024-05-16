@@ -24,7 +24,7 @@ public class ChessGameManager {
     public void proceedGame(Board board) {
         String command = InputView.inputCommand();
         if (!command.equals(END_COMMAND)) {
-            moveProcess(board, InputView.extractMovePath(command));
+            moveProcess(board, command);
             OutputView.printBoard(board);
             proceedGame(board);
         }
@@ -33,12 +33,14 @@ public class ChessGameManager {
         }
     }
 
-    public void moveProcess(Board board, List<String> locations) {
-        Position start = searchPosition(locations.get(0));
-        Position target = searchPosition(locations.get(1));
+    public void moveProcess(Board board, String command) {
+        String startPosition = InputView.extractStartPosition(command);
+        String targetPosition = InputView.extractTargetPosition(command);
+
+        Position start = searchPosition(startPosition);
+        Position target = searchPosition(targetPosition);
 
         verifyTurn(board.findPiece(start).getTeam());
-
         board.verifyPath(start, target);
         board.movePiece(start, target);
         turn = turn.changeTurn();

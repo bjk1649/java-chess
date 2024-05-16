@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
+    private static final int START_POSITION = 1;
+    private static final int TARGET_POSITION = 2;
 
     private InputView() {
 
@@ -16,11 +18,17 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static List<String> extractMovePath(String moveCommands) {
+    public static String extractStartPosition(String moveCommands) {
+        return separateCommand(moveCommands).get(START_POSITION);
+    }
+    public static String extractTargetPosition(String moveCommands) {
+        return separateCommand(moveCommands).get(TARGET_POSITION);
+    }
+
+    public static List<String> separateCommand(String moveCommands) {
         List<String> commandList = Arrays.stream(moveCommands.split(" "))
                 .collect(Collectors.toList());
         checkMoveCommand(commandList);
-        commandList.remove(0);
         return commandList;
     }
 
