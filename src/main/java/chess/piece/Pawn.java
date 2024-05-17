@@ -26,13 +26,11 @@ public class Pawn extends Piece {
         if (this.getTeam().equals(Team.WHITE)) {
             movements.addAll(updateWhitePawnMovableDirection(start));
             Movement movement = findMovement(this, movements, start, target);
-            verifyMovement(movements, movement);
             positions = findPawnPath(start, movement);
         }
         if (this.getTeam().equals(Team.BLACK)) {
             movements.addAll(updateBlackPawnMovableDirection(start));
             Movement movement = findMovement(this, movements, start, target);
-            verifyMovement(movements, movement);
             positions = findPawnPath(start, movement);
         }
         return positions;
