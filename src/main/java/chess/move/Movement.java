@@ -36,12 +36,25 @@ public enum Movement {
         this.rank = rank;
     }
 
-    public static Movement findMovementDirection(int file, int rank) {
-        return Arrays.stream(values())
-                .filter(movement -> movement.file == file
-                        && movement.rank == rank)
+    public static Movement findMovement(Piece piece, List<Movement> movableDirections, Position start, Position target) {
+        int file = start.fileGap(target);
+        int rank = start.rankGap(target);
+
+        Movement movement = Arrays.stream(values())
+                .filter(move -> move.file == file && move.rank == rank)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당 기물이 이동할 수 없는 방향입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이동 규칙입니다."));
+        return movement;
+    }
+
+    public static Movement findMovementByDirection(Piece piece, List<Movement> movableDirections, Position start, Position target) {
+        int file = start.convertGapToDirection(start.fileGap(target));
+        int rank = start.convertGapToDirection(start.rankGap(target));
+        Movement movement = Arrays.stream(values())
+                .filter(move -> move.file == file && move.rank == rank)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이동 규칙입니다."));
+        return movement;
     }
 
     public Position nextPosition(File file, Rank rank) {

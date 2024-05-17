@@ -5,13 +5,13 @@ import static chess.move.Movement.*;
 import chess.move.Movement;
 import chess.position.Position;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
 public class Pawn extends Piece {
     private static final List<Movement> BLACK_PAWN_MOVABLE_DIRECTION = List.of(DOWN, DOWN_RIGHT, DOWN_LEFT);
     private static final List<Movement> BLACK_PAWN_FIRST_MOVABLE_DIRECTION = List.of(DOWN, DOWN_DOWN);
-
     private static final List<Movement> WHITE_PAWN_MOVABLE_DIRECTION = List.of(UP, UP_RIGHT, UP_LEFT);
     private static final List<Movement> WHITE_PAWN_FIRST_MOVABLE_DIRECTION = List.of(UP, UP_UP);
 
@@ -20,18 +20,18 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> findPath(Position start, Position target, int fileGap, int rankGap) {
+    public List<Position> findPath(Position start, Position target) {
         List<Position> positions = new ArrayList<>();
         List<Movement> movements = new ArrayList<>();
         if (this.getTeam().equals(Team.WHITE)) {
             movements.addAll(updateWhitePawnMovableDirection(start));
-            Movement movement = findMovementDirection(fileGap, rankGap);
+            Movement movement = findMovement(this, movements, start, target);
             verifyMovement(movements, movement);
             positions = findPawnPath(start, movement);
         }
         if (this.getTeam().equals(Team.BLACK)) {
             movements.addAll(updateBlackPawnMovableDirection(start));
-            Movement movement = findMovementDirection(fileGap, rankGap);
+            Movement movement = findMovement(this, movements, start, target);
             verifyMovement(movements, movement);
             positions = findPawnPath(start, movement);
         }

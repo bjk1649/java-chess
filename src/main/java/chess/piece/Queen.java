@@ -15,11 +15,8 @@ public class Queen extends Piece {
     }
 
     @Override
-    public List<Position> findPath(Position start, Position target, int fileGap, int rankGap) {
-        int file = changeGapToDirection(fileGap);
-        int rank = changeGapToDirection(rankGap);
-        Movement movement = Movement.findMovementDirection(file, rank);
-
+    public List<Position> findPath(Position start, Position target) {
+        Movement movement = Movement.findMovementByDirection(this, MOVABLE_DIRECTION, start, target);
         verifyMovement(MOVABLE_DIRECTION, movement);
 
         Position next = start;
