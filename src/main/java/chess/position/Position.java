@@ -33,17 +33,15 @@ public class Position {
     }
 
     public int fileGap(Position target) {
-        return this.file.calculateFileGap(this.file, target.file);
+        return this.file.calculateFileGap(target.file);
     }
 
     public int rankGap(Position target) {
-        return this.rank.calculateRankGap(this.rank, target.rank);
+        return this.rank.calculateRankGap(target.rank);
     }
 
     public Position findNextPosition(Movement movement) {
-        int file = this.file.value();
-        int rank = this.rank.value();
-        return movement.nextPosition(file, rank);
+        return movement.nextPosition(this.file, this.rank);
     }
 
     public int convertGapToDirection(int gap) {
