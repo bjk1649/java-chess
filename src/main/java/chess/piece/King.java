@@ -25,11 +25,6 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
     public boolean isEmpty() {
         return false;
     }
