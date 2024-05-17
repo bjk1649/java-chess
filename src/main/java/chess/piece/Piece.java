@@ -17,6 +17,8 @@ public abstract class Piece {
 
     public abstract List<Position> findPath(Position start, Position target);
 
+    public abstract boolean isPawn();
+
     public void checkTargetPosition(Piece targetPiece) {
         if (targetPiece.getTeam().equals(this.team)) {
             throw new IllegalStateException("같은 팀 기물이 있는 위치로 이동 할 수 없습니다.");

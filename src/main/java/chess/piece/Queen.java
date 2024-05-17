@@ -30,4 +30,9 @@ public class Queen extends Piece {
         }
         return positions;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }
