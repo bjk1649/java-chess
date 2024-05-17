@@ -13,6 +13,8 @@ public class Position {
     public static final int LAST_RANK = 8;
     public static final int BLACK_PAWN_INITIAL_RANK = 7;
     public static final int WHITE_PAWN_INITIAL_RANK = 2;
+    public static final int START_EMPTY_PIECE_RANK = 3;
+    public static final int END_EMPTY_PIECE_RANK = 6;
 
     private final File file;
     private final Rank rank;

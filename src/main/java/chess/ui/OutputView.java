@@ -1,6 +1,7 @@
 package chess.ui;
 
 import chess.board.Board;
+import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.position.Position;
 import chess.position.Rank;
@@ -34,7 +35,7 @@ public class OutputView {
     }
 
     private static String getPieceSymbol(Piece piece) {
-        if (piece == null) {
+        if (piece.isEmpty()) {
             return ".";
         }
         return PieceSymbol.convertTypeToSymbol(piece);
