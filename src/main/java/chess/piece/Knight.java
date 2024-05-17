@@ -17,9 +17,8 @@ public class Knight extends Piece {
     }
 
     @Override
-    public List<Position> findPath(Position start, Position target, int fileGap, int rankGap) {
-        Movement movement = Movement.findMovementDirection(fileGap, rankGap);
-
+    public List<Position> findPath(Position start, Position target) {
+        Movement movement = Movement.findMovement(this, MOVABLE_DIRECTION, start, target);
         verifyMovement(MOVABLE_DIRECTION, movement);
 
         List<Position> positions = new ArrayList<>();

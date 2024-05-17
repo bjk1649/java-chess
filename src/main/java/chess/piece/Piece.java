@@ -15,16 +15,7 @@ public abstract class Piece {
         return team;
     }
 
-    public abstract List<Position> findPath(Position start, Position target, int fileGap, int rankGap);
-
-    public int changeGapToDirection(int gap) {
-        if (gap > 0) {
-            return 1;
-        } else if (gap < 0) {
-            return -1;
-        }
-        return 0;
-    }
+    public abstract List<Position> findPath(Position start, Position target);
 
     public void checkTargetPosition(Piece targetPiece) {
         if (targetPiece.getTeam().equals(this.team)) {
