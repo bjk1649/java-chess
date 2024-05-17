@@ -30,4 +30,9 @@ public class Bishop extends Piece {
         }
         return positions;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

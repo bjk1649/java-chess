@@ -64,4 +64,9 @@ public class Pawn extends Piece {
         positions.add(next);
         return positions;
     }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
 }

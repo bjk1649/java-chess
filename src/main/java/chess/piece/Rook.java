@@ -30,4 +30,9 @@ public class Rook extends Piece {
         }
         return positions;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

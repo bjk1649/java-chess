@@ -54,20 +54,18 @@ public class Board {
     }
 
     public void verifyPath(Position start, Position target) {
-        int fileGap = start.fileGap(target);
-        int rankGap = start.rankGap(target);
         Piece selectedPiece = findPiece(start);
         Piece targetPiece = findPiece(target);
-        if (selectedPiece instanceof Pawn) {
-            selectedPiece.checkTargetPositionByPawn(targetPiece, fileGap);
+        if (selectedPiece.isPawn()) {
+            selectedPiece.checkTargetPositionByPawn(targetPiece, start.fileGap(target));
         }
         if (targetPiece != null) {
             selectedPiece.checkTargetPosition(targetPiece);
         }
 
-        List<Position> positions = selectedPiece.findPath(start, target, fileGap, rankGap);
+        List<Position> path = selectedPiece.findPath(start, target);
 
-        for (Position position : positions) {
+        for (Position position : path) {
             checkPositionIsEmpty(position, target);
         }
     }
