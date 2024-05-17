@@ -66,12 +66,7 @@ public class Board {
     public void verifyPath(Position start, Position target) {
         Piece selectedPiece = findPiece(start);
         Piece targetPiece = findPiece(target);
-        if (selectedPiece.isPawn()) {
-            selectedPiece.checkTargetPositionByPawn(targetPiece, start.fileGap(target));
-        }
-        if (targetPiece.isEmpty()) {
-            selectedPiece.checkTargetPosition(targetPiece);
-        }
+        selectedPiece.checkTargetPosition(targetPiece, start, target);
 
         List<Position> path = selectedPiece.findPath(start, target);
 
