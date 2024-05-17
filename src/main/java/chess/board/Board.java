@@ -2,6 +2,7 @@ package chess.board;
 
 import chess.piece.*;
 import chess.position.Position;
+import chess.position.Rank;
 import chess.position.StartPiecePosition;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ public class Board {
     private void initializeBoard() {
         initializeBlackPiece();
         initializeWhitePiece();
+        initializeEmptyPiece();
     }
 
     private void initializeBlackPiece() {
@@ -48,9 +50,17 @@ public class Board {
         }
     }
 
+    private void initializeEmptyPiece() {
+        for (int rank = Position.START_EMPTY_PIECE_RANK; rank <= Position.END_EMPTY_PIECE_RANK; rank++) {
+            for(int file = Position.FIRST_FILE; file <= Position.LAST_FILE; file++) {
+                board.put(new Position(file, rank), new Empty(Team.NONE));
+            }
+        }
+    }
+
     public void movePiece(Position start, Position target) {
         this.board.put(target, findPiece(start));
-        this.board.remove(start);
+        this.board.put(start, new Empty(Team.NONE));
     }
 
     public void verifyPath(Position start, Position target) {
@@ -59,7 +69,7 @@ public class Board {
         if (selectedPiece.isPawn()) {
             selectedPiece.checkTargetPositionByPawn(targetPiece, start.fileGap(target));
         }
-        if (targetPiece != null) {
+        if (targetPiece.isEmpty()) {
             selectedPiece.checkTargetPosition(targetPiece);
         }
 
@@ -71,7 +81,7 @@ public class Board {
     }
 
     public void checkPositionIsEmpty(Position position, Position target) {
-        if (this.findPiece(position) != null && !position.equals(target)) {
+        if (!this.findPiece(position).isEmpty() && !position.equals(target)) {
             throw new IllegalArgumentException("다른 기물이 존재해서 지나갈 수 없습니다.");
         }
     }

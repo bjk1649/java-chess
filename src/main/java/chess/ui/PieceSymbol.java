@@ -14,6 +14,7 @@ public class PieceSymbol {
         symbolMap.put(Knight.class, "N");
         symbolMap.put(Queen.class, "Q");
         symbolMap.put(King.class, "K");
+        symbolMap.put(Empty.class, ".");
     }
 
     private PieceSymbol() {
