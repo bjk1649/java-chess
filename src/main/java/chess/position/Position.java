@@ -1,5 +1,7 @@
 package chess.position;
 
+import static chess.move.Direction.*;
+
 import chess.move.Movement;
 import chess.piece.Team;
 import java.util.Objects;
@@ -42,6 +44,15 @@ public class Position {
         int file = this.file.value();
         int rank = this.rank.value();
         return movement.nextPosition(file, rank);
+    }
+
+    public int convertGapToDirection(int gap) {
+        if (gap > 0) {
+            return POSITIVE.value();
+        } else if (gap < 0) {
+            return NEGATIVE.value();
+        }
+        return STATIONARY.value();
     }
 
     public boolean onInitialWhitePawnRank(Team team) {
