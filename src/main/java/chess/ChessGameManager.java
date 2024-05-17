@@ -55,7 +55,7 @@ public class ChessGameManager {
 
     public void verifyTurn(Team team) {
         if (!team.isSameTeam(turn)) {
-            throw new IllegalArgumentException("상대방 기물을 이동시킬 수 없습니다.");
+            throw new IllegalStateException("상대방 기물을 이동시킬 수 없습니다.");
         }
     }
 }
