@@ -26,8 +26,8 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 File 입력입니다(1~8)"));
     }
 
-    public int calculateFileGap(File start, File target) {
-        return target.value - start.value;
+    public int calculateFileGap(File target) {
+        return target.value - this.value;
     }
 
     public int value() {

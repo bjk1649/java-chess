@@ -25,8 +25,8 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 Rank 입력입니다(1~8)"));
     }
 
-    public int calculateRankGap(Rank start, Rank target) {
-        return target.value - start.value;
+    public int calculateRankGap(Rank target) {
+        return target.value - this.value;
     }
 
     public int value() {
