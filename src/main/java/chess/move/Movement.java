@@ -44,6 +44,7 @@ public enum Movement {
                 .filter(move -> move.file == file && move.rank == rank)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이동 규칙입니다."));
+        piece.verifyMovement(movableDirections, movement);
         return movement;
     }
 
@@ -54,6 +55,7 @@ public enum Movement {
                 .filter(move -> move.file == file && move.rank == rank)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이동 규칙입니다."));
+        piece.verifyMovement(movableDirections, movement);
         return movement;
     }
 
