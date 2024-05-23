@@ -24,7 +24,7 @@ public class MovementTest {
         Piece piece = new Knight(Team.WHITE);
         Position start = new Position(2,1);
         Position target = new Position(4,8);
-        assertThatThrownBy(() -> Movement.findMovement(piece, MOVABLE_DIRECTION, start, target))
+        assertThatThrownBy(() -> Movement.findMovement(MOVABLE_DIRECTION, start, target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("존재하지 않는 이동 규칙입니다.");
     }
@@ -35,7 +35,7 @@ public class MovementTest {
         Piece piece = new Knight(Team.WHITE);
         Position start = new Position(1,1);
         Position target = new Position(1,3);
-        assertThatThrownBy(() -> Movement.findMovement(piece, MOVABLE_DIRECTION, start, target))
+        assertThatThrownBy(() -> Movement.findMovement(MOVABLE_DIRECTION, start, target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("해당 기물이 이동할 수 있는 범위를 벗어났습니다.");
     }

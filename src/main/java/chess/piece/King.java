@@ -16,7 +16,7 @@ public class King extends Piece {
 
     @Override
     public List<Position> findPath(Position start, Position target) {
-        Movement movement = Movement.findMovement(this, MOVABLE_DIRECTION, start, target);
+        Movement movement = Movement.findMovement(MOVABLE_DIRECTION, start, target);
 
         List<Position> positions = new ArrayList<>();
         Position next = start.findNextPosition(movement);
