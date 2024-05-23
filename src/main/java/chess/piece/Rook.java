@@ -16,7 +16,7 @@ public class Rook extends Piece {
 
     @Override
     public List<Position> findPath(Position start, Position target) {
-        Movement movement = Movement.findMovementByDirection(this, MOVABLE_DIRECTION, start, target);
+        Movement movement = Movement.findMovementByDirection(MOVABLE_DIRECTION, start, target);
 
         Position next = start;
         List<Position> positions = new ArrayList<>();
