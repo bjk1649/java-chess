@@ -30,4 +30,8 @@ public abstract class Piece {
             throw new IllegalArgumentException("해당 기물이 이동할 수 있는 범위를 벗어났습니다.");
         }
     }
+
+    public boolean checkSameTeam(Team team) {
+        return this.team.isSameTeam(team);
+    }
 }

@@ -2,11 +2,9 @@ package chess.piece;
 
 import static chess.move.Movement.*;
 
-import chess.move.Direction;
 import chess.move.Movement;
 import chess.position.Position;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -24,13 +22,13 @@ public class Pawn extends Piece {
     public List<Position> findPath(Position start, Position target) {
         List<Position> positions = new ArrayList<>();
         List<Movement> movements = new ArrayList<>();
-        if (this.getTeam().equals(Team.WHITE)) {
+        if (this.checkSameTeam(Team.WHITE)) {
             movements.addAll(updateWhitePawnMovableDirection(start));
             Movement movement = findMovement(this, movements, start, target);
             Position next = start.findNextPosition(movement);
             positions.add(next);
         }
-        if (this.getTeam().equals(Team.BLACK)) {
+        if (this.checkSameTeam(Team.BLACK)) {
             movements.addAll(updateBlackPawnMovableDirection(start));
             Movement movement = findMovement(this, movements, start, target);
             Position next = start.findNextPosition(movement);
@@ -41,7 +39,7 @@ public class Pawn extends Piece {
 
     private List<Movement> updateWhitePawnMovableDirection(Position start) {
         List<Movement> movements = new ArrayList<>();
-        if (start.onInitialWhitePawnRank(this.getTeam())) {
+        if (start.onInitialRankWhitePawn()) {
             movements.addAll(WHITE_PAWN_FIRST_MOVABLE_DIRECTION);
             return movements;
         }
@@ -51,7 +49,7 @@ public class Pawn extends Piece {
 
     private List<Movement> updateBlackPawnMovableDirection(Position start) {
         List<Movement> movements = new ArrayList<>();
-        if (start.onInitialBlackPawnRank(this.getTeam())) {
+        if (start.onInitialRankBlackPawn()) {
             movements.addAll(BLACK_PAWN_FIRST_MOVABLE_DIRECTION);
             return movements;
         }
@@ -61,10 +59,10 @@ public class Pawn extends Piece {
 
     @Override
     public void checkTargetPosition(Piece targetPiece, Position start, Position target) {
-        if (targetPiece.getTeam().equals(this.getTeam())) {
+        if (this.checkSameTeam(targetPiece.getTeam())) {
             throw new IllegalStateException("같은 팀 기물이 있는 위치로 이동 할 수 없습니다.");
         }
-        else if (!targetPiece.getTeam().equals(this.getTeam())) {
+        else if (!this.checkSameTeam(targetPiece.getTeam())) {
             checkEnemyPieceByPawn(targetPiece, start, target);
         }
     }
