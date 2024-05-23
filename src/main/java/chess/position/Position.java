@@ -1,9 +1,6 @@
 package chess.position;
 
-import static chess.move.Direction.*;
-
 import chess.move.Movement;
-import chess.piece.Team;
 import java.util.Objects;
 
 public class Position {
@@ -46,27 +43,12 @@ public class Position {
         return movement.nextPosition(this.file, this.rank);
     }
 
-    public int convertGapToDirection(int gap) {
-        if (gap > 0) {
-            return POSITIVE.value();
-        } else if (gap < 0) {
-            return NEGATIVE.value();
-        }
-        return STATIONARY.value();
+    public boolean onInitialRankWhitePawn() {
+        return this.rank == Rank.findByValue(WHITE_PAWN_INITIAL_RANK);
     }
 
-    public boolean onInitialWhitePawnRank(Team team) {
-        if (team.isSameTeam(Team.WHITE)) {
-            return this.rank.value() == WHITE_PAWN_INITIAL_RANK;
-        }
-        return false;
-    }
-
-    public boolean onInitialBlackPawnRank(Team team) {
-        if (team.isSameTeam(Team.BLACK)) {
-            return this.rank.value() == BLACK_PAWN_INITIAL_RANK;
-        }
-        return false;
+    public boolean onInitialRankBlackPawn() {
+        return this.rank == Rank.findByValue(BLACK_PAWN_INITIAL_RANK);
     }
 
     @Override
