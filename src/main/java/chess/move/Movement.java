@@ -51,14 +51,23 @@ public enum Movement {
     }
 
     public static Movement findMovementByDirection(List<Movement> movableDirections, Position start, Position target) {
-        int file = start.convertGapToDirection(start.fileGap(target));
-        int rank = start.convertGapToDirection(start.rankGap(target));
+        int file = convertGapToDirection(start.fileGap(target));
+        int rank = convertGapToDirection(start.rankGap(target));
         Movement movement = Arrays.stream(values())
                 .filter(move -> move.file == file && move.rank == rank)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이동 규칙입니다."));
         movement.verifyMovement(movableDirections);
         return movement;
+    }
+
+    public static int convertGapToDirection(int gap) {
+        if (gap > 0) {
+            return POSITIVE;
+        } else if (gap < 0) {
+            return NEGATIVE;
+        }
+        return STATIONARY;
     }
 
     public void verifyMovement(List<Movement> movableDirections) {
