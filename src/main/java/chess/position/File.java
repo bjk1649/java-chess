@@ -1,7 +1,6 @@
 package chess.position;
 
 import java.util.Arrays;
-import chess.position.Position;
 
 public enum File {
     A(1),

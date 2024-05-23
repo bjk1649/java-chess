@@ -1,7 +1,6 @@
 package chess.ui;
 
 import chess.board.Board;
-import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.position.Position;
 import chess.position.Rank;

@@ -2,7 +2,6 @@ package chess.board;
 
 import chess.piece.*;
 import chess.position.Position;
-import chess.position.Rank;
 import chess.position.StartPiecePosition;
 import java.util.HashMap;
 import java.util.List;
