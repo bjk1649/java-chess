@@ -24,13 +24,13 @@ public class Pawn extends Piece {
         List<Movement> movements = new ArrayList<>();
         if (this.checkSameTeam(Team.WHITE)) {
             movements.addAll(updateWhitePawnMovableDirection(start));
-            Movement movement = findMovement(this, movements, start, target);
+            Movement movement = findMovement(movements, start, target);
             Position next = start.findNextPosition(movement);
             positions.add(next);
         }
         if (this.checkSameTeam(Team.BLACK)) {
             movements.addAll(updateBlackPawnMovableDirection(start));
-            Movement movement = findMovement(this, movements, start, target);
+            Movement movement = findMovement(movements, start, target);
             Position next = start.findNextPosition(movement);
             positions.add(next);
         }
@@ -69,10 +69,10 @@ public class Pawn extends Piece {
 
     private void checkEnemyPieceByPawn(Piece targetPiece, Position start, Position target) {
         int fileGap = start.fileGap(target);
-        if (targetPiece.isEmpty() && fileGap != Direction.STATIONARY.value()) {
+        if (targetPiece.isEmpty() && fileGap != STATIONARY) {
             throw new IllegalArgumentException("폰은 상대 기물을 공격할 때만 대각선으로 이동할 수 있습니다.");
         }
-        if (!targetPiece.isEmpty() && fileGap == Direction.STATIONARY.value()) {
+        if (!targetPiece.isEmpty() && fileGap == STATIONARY) {
             throw new IllegalArgumentException("폰은 정면에 있는 상대 기물을 공격할 수 없습니다.");
         }
     }

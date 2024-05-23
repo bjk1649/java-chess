@@ -1,10 +1,8 @@
 package chess.move;
 
-import chess.piece.Piece;
 import chess.position.File;
 import chess.position.Position;
 import chess.position.Rank;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,6 +26,10 @@ public enum Movement {
     UP_UP(0,2),
     DOWN_DOWN(0,-2);
 
+    private static final int POSITIVE = 1;
+    private static final int NEGATIVE = -1;
+    public static final int STATIONARY = 0;
+
     private final int file;
     private final int rank;
 
@@ -36,7 +38,7 @@ public enum Movement {
         this.rank = rank;
     }
 
-    public static Movement findMovement(Piece piece, List<Movement> movableDirections, Position start, Position target) {
+    public static Movement findMovement(List<Movement> movableDirections, Position start, Position target) {
         int file = start.fileGap(target);
         int rank = start.rankGap(target);
 
@@ -44,19 +46,25 @@ public enum Movement {
                 .filter(move -> move.file == file && move.rank == rank)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이동 규칙입니다."));
-        piece.verifyMovement(movableDirections, movement);
+        movement.verifyMovement(movableDirections);
         return movement;
     }
 
-    public static Movement findMovementByDirection(Piece piece, List<Movement> movableDirections, Position start, Position target) {
+    public static Movement findMovementByDirection(List<Movement> movableDirections, Position start, Position target) {
         int file = start.convertGapToDirection(start.fileGap(target));
         int rank = start.convertGapToDirection(start.rankGap(target));
         Movement movement = Arrays.stream(values())
                 .filter(move -> move.file == file && move.rank == rank)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이동 규칙입니다."));
-        piece.verifyMovement(movableDirections, movement);
+        movement.verifyMovement(movableDirections);
         return movement;
+    }
+
+    public void verifyMovement(List<Movement> movableDirections) {
+        if (!movableDirections.contains(this)) {
+            throw new IllegalArgumentException("해당 기물이 이동할 수 있는 범위를 벗어났습니다.");
+        }
     }
 
     public Position nextPosition(File file, Rank rank) {
