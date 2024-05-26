@@ -1,19 +1,30 @@
 package chess.piece;
 
-public class Piece {
-    private final Type type;
+import chess.position.Position;
+import java.util.List;
+
+public abstract class Piece {
     private final Team team;
 
-    public Piece(final Type type, final Team team) {
-        this.type = type;
+    public Piece(final Team team) {
         this.team = team;
-    }
-
-    public Type getType() {
-        return type;
     }
 
     public Team getTeam() {
         return team;
+    }
+
+    public abstract List<Position> findPath(Position start, Position target);
+
+    public abstract boolean isEmpty();
+
+    public void checkTargetPosition(Piece targetPiece, Position start, Position target) {
+        if (targetPiece.team.equals(this.team)) {
+            throw new IllegalStateException("같은 팀 기물이 있는 위치로 이동 할 수 없습니다.");
+        }
+    }
+
+    public boolean checkSameTeam(Team team) {
+        return this.team.isSameTeam(team);
     }
 }
