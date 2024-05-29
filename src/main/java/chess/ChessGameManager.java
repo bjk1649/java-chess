@@ -1,11 +1,11 @@
 package chess;
 
 import chess.board.Board;
+import chess.piece.Piece;
 import chess.ui.InputView;
 import chess.ui.OutputView;
 import chess.position.Position;
 import chess.piece.Team;
-import java.util.List;
 
 public class ChessGameManager {
     private static final String START_COMMAND = "start";
@@ -40,7 +40,7 @@ public class ChessGameManager {
         Position start = searchPosition(startPosition);
         Position target = searchPosition(targetPosition);
 
-        verifyTurn(board.findPiece(start).getTeam());
+        verifyTurn(board.findPiece(start));
         board.verifyPath(start, target);
         board.movePiece(start, target);
         turn = turn.changeTurn();
@@ -53,8 +53,8 @@ public class ChessGameManager {
         return new Position(file, rank);
     }
 
-    public void verifyTurn(Team team) {
-        if (!team.isSameTeam(turn)) {
+    public void verifyTurn(Piece piece) {
+        if (!piece.isSameTeam(turn)) {
             throw new IllegalStateException("상대방 기물을 이동시킬 수 없습니다.");
         }
     }
