@@ -19,8 +19,8 @@ public class TeamTest {
         Piece piece2 = new Knight(Team.WHITE);
         Piece piece3 = new Pawn(Team.BLACK);
 
-        assertTrue(piece1.getTeam().isSameTeam(piece2.getTeam()));
-        assertFalse(piece1.getTeam().isSameTeam((piece3.getTeam())));
+        assertTrue(piece1.isSameTeam(piece2));
+        assertFalse(piece1.isSameTeam(piece3));
     }
 
     @DisplayName("현재 턴을 변경할 수 있다.")

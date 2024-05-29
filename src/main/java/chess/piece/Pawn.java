@@ -22,13 +22,13 @@ public class Pawn extends Piece {
     public List<Position> findPath(Position start, Position target) {
         List<Position> positions = new ArrayList<>();
         List<Movement> movements = new ArrayList<>();
-        if (this.checkSameTeam(Team.WHITE)) {
+        if (this.isSameTeam(Team.WHITE)) {
             movements.addAll(updateWhitePawnMovableDirection(start));
             Movement movement = findMovement(movements, start, target);
             Position next = start.findNextPosition(movement);
             positions.add(next);
         }
-        if (this.checkSameTeam(Team.BLACK)) {
+        if (this.isSameTeam(Team.BLACK)) {
             movements.addAll(updateBlackPawnMovableDirection(start));
             Movement movement = findMovement(movements, start, target);
             Position next = start.findNextPosition(movement);
@@ -59,10 +59,10 @@ public class Pawn extends Piece {
 
     @Override
     public void checkTargetPosition(Piece targetPiece, Position start, Position target) {
-        if (this.checkSameTeam(targetPiece.getTeam())) {
+        if (this.isSameTeam(targetPiece)) {
             throw new IllegalStateException("같은 팀 기물이 있는 위치로 이동 할 수 없습니다.");
         }
-        else if (!this.checkSameTeam(targetPiece.getTeam())) {
+        else if (!this.isSameTeam(targetPiece)) {
             checkEnemyPieceByPawn(targetPiece, start, target);
         }
     }

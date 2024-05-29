@@ -10,10 +10,6 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public Team getTeam() {
-        return team;
-    }
-
     public abstract List<Position> findPath(Position start, Position target);
 
     public abstract boolean isEmpty();
@@ -24,7 +20,9 @@ public abstract class Piece {
         }
     }
 
-    public boolean checkSameTeam(Team team) {
-        return this.team.isSameTeam(team);
+    public boolean isSameTeam(Piece targetPiece) {
+        return this.team.isSameTeam(targetPiece.team);
     }
+
+    public boolean isSameTeam(Team team) { return this.team.isSameTeam(team);}
 }

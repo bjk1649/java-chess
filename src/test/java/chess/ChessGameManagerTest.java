@@ -15,7 +15,7 @@ public class ChessGameManagerTest {
         ChessGameManager manager = new ChessGameManager();
         Piece selectedPiece = new Pawn(Team.BLACK);
 
-        assertThatThrownBy(() -> manager.verifyTurn(selectedPiece.getTeam()))
+        assertThatThrownBy(() -> manager.verifyTurn(selectedPiece))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("상대방 기물을 이동시킬 수 없습니다.");
     }
