@@ -31,6 +31,24 @@ public class OutputView {
         }
     }
 
+    public static void printEndGameByStatusMessage(Board board) {
+        double whiteTeamScore = board.calculateScore(Team.WHITE);
+        double blackTeamScore = board.calculateScore(Team.BLACK);
+
+        System.out.println("흰색 기물 점수 : " + whiteTeamScore);
+        System.out.println("검은색 기물 점수 : " + blackTeamScore);
+
+        if(whiteTeamScore > blackTeamScore) {
+            System.out.println("WHITE 팀의 승리입니다.");
+        }
+        if(whiteTeamScore < blackTeamScore) {
+            System.out.println("BLACK 팀의 승리입니다.");
+        }
+        if(whiteTeamScore == blackTeamScore) {
+            System.out.println("무승부입니다.");
+        }
+    }
+
     private static void printOneRank(Board board, Rank rank) {
         for (int file = Position.FIRST_FILE; file <= Position.LAST_FILE; file++) {
             Position position = new Position(file, rank.value());
