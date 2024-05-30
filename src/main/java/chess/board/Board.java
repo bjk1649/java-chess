@@ -1,8 +1,11 @@
 package chess.board;
 
 import chess.piece.*;
+import chess.position.File;
 import chess.position.Position;
 import chess.position.StartPiecePosition;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,6 +81,10 @@ public class Board {
         if (!this.findPiece(position).isEmpty() && !position.equals(target)) {
             throw new IllegalArgumentException("다른 기물이 존재해서 지나갈 수 없습니다.");
         }
+    }
+
+    public double calculateScore(Team team) {
+        return Score.calculateScore(this, team);
     }
 
     public Piece findPiece(Position position) {
