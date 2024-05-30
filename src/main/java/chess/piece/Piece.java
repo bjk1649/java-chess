@@ -14,6 +14,8 @@ public abstract class Piece {
 
     public abstract boolean isEmpty();
 
+    public abstract boolean isKing();
+
     public void checkTargetPosition(Piece targetPiece, Position start, Position target) {
         if (targetPiece.team.equals(this.team)) {
             throw new IllegalStateException("같은 팀 기물이 있는 위치로 이동 할 수 없습니다.");
