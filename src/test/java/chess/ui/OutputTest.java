@@ -4,27 +4,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.ChessGameManager;
 import chess.board.Board;
+import chess.piece.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 public class OutputTest {
-    @DisplayName("킹이 죽은 경우 게임을 종료하고 승리팀을 출력합니다")
+    @DisplayName("게임이 종료된 턴에 따라 승리 팀을 출력한다.")
     @Test
     void kingDead() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        ChessGameManager manager = new ChessGameManager();
-        Board board = new Board();
+        Team turn = Team.WHITE;
 
-        manager.endGame();
+        OutputView.printEndGameMessage(turn);
         String output = outContent.toString();
         assertThat(output).contains("WHITE 팀의 승리입니다.");
 
-        manager.moveProcess(board, "move d2 d4");
+        turn = turn.changeTurn();
 
-        manager.endGame();
+        OutputView.printEndGameMessage(turn);
         output = outContent.toString();
         assertThat(output).contains("BLACK 팀의 승리입니다.");
     }
