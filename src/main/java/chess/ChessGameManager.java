@@ -9,7 +9,7 @@ import chess.piece.Team;
 
 public class ChessGameManager {
     private static final String START_COMMAND = "start";
-    private static final String END_COMMAND = "end";
+    private static final String STATUS_COMMAND = "status";
     private Team turn = Team.WHITE;
 
     public void startNewGame() {
@@ -23,13 +23,13 @@ public class ChessGameManager {
 
     public void proceedGame(Board board) {
         String command = InputView.inputCommand();
-        if (!command.equals(END_COMMAND)) {
+        if (!command.equals(STATUS_COMMAND)) {
             moveProcess(board, command);
             OutputView.printBoard(board);
             proceedGame(board);
         }
-        if (command.equals(END_COMMAND)) {
-            System.out.println("게임 종료");
+        if (command.equals(STATUS_COMMAND)) {
+            // STATUS 입력 시 점수, 승패 출력 구현
         }
     }
 
@@ -42,6 +42,13 @@ public class ChessGameManager {
 
         verifyTurn(board.findPiece(start));
         board.verifyPath(start, target);
+        if(board.findPiece(target).isKing()) {
+            System.out.println("킹 사망");
+            board.movePiece(start, target);
+            OutputView.printBoard(board);
+            endGame(turn);
+            System.exit(0);
+        }
         board.movePiece(start, target);
         turn = turn.changeTurn();
     }
@@ -58,4 +65,14 @@ public class ChessGameManager {
             throw new IllegalStateException("상대방 기물을 이동시킬 수 없습니다.");
         }
     }
+
+    public void endGame(Team team) {
+        OutputView.printEndGameMessage(team);
+    }
 }
+
+// move e2 e3
+// move f7 f6
+// move d1 h5
+// move f6 f5
+// move h5 e8
