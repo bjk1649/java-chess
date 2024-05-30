@@ -29,7 +29,7 @@ public class ChessGameManager {
             proceedGame(board);
         }
         if (command.equals(STATUS_COMMAND)) {
-            // STATUS 입력 시 점수, 승패 출력 구현
+            OutputView.printEndGameByStatusMessage(board);
         }
     }
 
@@ -43,10 +43,9 @@ public class ChessGameManager {
         verifyTurn(board.findPiece(start));
         board.verifyPath(start, target);
         if(board.findPiece(target).isKing()) {
-            System.out.println("킹 사망");
             board.movePiece(start, target);
             OutputView.printBoard(board);
-            endGame(turn);
+            OutputView.printEndGameMessage(turn);
             System.exit(0);
         }
         board.movePiece(start, target);
@@ -66,13 +65,8 @@ public class ChessGameManager {
         }
     }
 
-    public void endGame(Team team) {
-        OutputView.printEndGameMessage(team);
+    public void endGame() {
+        OutputView.printEndGameMessage(turn);
     }
 }
 
-// move e2 e3
-// move f7 f6
-// move d1 h5
-// move f6 f5
-// move h5 e8
