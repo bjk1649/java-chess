@@ -64,9 +64,5 @@ public class ChessGameManager {
             throw new IllegalStateException("상대방 기물을 이동시킬 수 없습니다.");
         }
     }
-
-    public void endGame() {
-        OutputView.printEndGameMessage(turn);
-    }
 }
 
