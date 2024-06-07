@@ -34,7 +34,7 @@ public enum Score {
         return resultScore;
     }
 
-    public static List<Score> collectPieceScore(Board board, Team team) {
+    private static List<Score> collectPieceScore(Board board, Team team) {
         List<Score> scores = new ArrayList<>();
         for (int file = Position.FIRST_FILE; file <= Position.LAST_FILE; file++) {
             scores.addAll(Score.collectPieceByPosition(board, File.findByValue(file), team));
@@ -42,7 +42,7 @@ public enum Score {
         return scores;
     }
 
-    public static List<Score> collectPieceByPosition(Board board, File file, Team team) {
+    private static List<Score> collectPieceByPosition(Board board, File file, Team team) {
         List<Score> scores = new ArrayList<>();
         for (int rank = Position.FIRST_RANK; rank <= Position.LAST_RANK; rank++) {
             Position position = new Position(file.value(), rank);
@@ -53,7 +53,7 @@ public enum Score {
         return checkMultiplePawnInOneFile(scores);
     }
 
-    public static List<Score> checkMultiplePawnInOneFile(List<Score> scores) {
+    private static List<Score> checkMultiplePawnInOneFile(List<Score> scores) {
         int pawnCount = 0;
         for (Score score : scores) {
             if (score == PAWN_SCORE) {
