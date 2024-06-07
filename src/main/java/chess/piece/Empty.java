@@ -1,7 +1,6 @@
 package chess.piece;
 
 import chess.position.Position;
-
 import java.util.List;
 
 public class Empty extends Piece {

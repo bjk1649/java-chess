@@ -1,8 +1,6 @@
 package chess.position;
 
 import chess.move.Movement;
-
-import java.util.List;
 import java.util.Objects;
 
 public class Position {

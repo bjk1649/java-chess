@@ -61,7 +61,7 @@ public enum Score {
             }
         }
         if (pawnCount > 1) {
-            for(int i = 0; i < pawnCount; i++) {
+            for (int i = 0; i < pawnCount; i++) {
                 scores.add(MULTIPLE_PAWN_SCORE);
             }
         }

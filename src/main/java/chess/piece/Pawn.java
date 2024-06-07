@@ -62,8 +62,7 @@ public class Pawn extends Piece {
     public void checkTargetPosition(Piece targetPiece, Position start, Position target) {
         if (this.isSameTeam(targetPiece)) {
             throw new IllegalStateException("같은 팀 기물이 있는 위치로 이동 할 수 없습니다.");
-        }
-        else if (!this.isSameTeam(targetPiece)) {
+        } else if (!this.isSameTeam(targetPiece)) {
             checkEnemyPieceByPawn(targetPiece, start, target);
         }
     }

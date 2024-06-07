@@ -1,17 +1,14 @@
 package chess.board;
 
 import chess.piece.*;
-import chess.position.File;
 import chess.position.Position;
 import chess.position.StartPiecePosition;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Board {
-    private final Map<Position, Piece> board; //좌표, 기물종류
+    private final Map<Position, Piece> board;
 
     public Board() {
         this.board = new HashMap<>();
@@ -54,7 +51,7 @@ public class Board {
 
     private void initializeEmptyPiece() {
         for (int rank = Position.START_EMPTY_PIECE_RANK; rank <= Position.END_EMPTY_PIECE_RANK; rank++) {
-            for(int file = Position.FIRST_FILE; file <= Position.LAST_FILE; file++) {
+            for (int file = Position.FIRST_FILE; file <= Position.LAST_FILE; file++) {
                 board.put(new Position(file, rank), new Empty(Team.NONE));
             }
         }

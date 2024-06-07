@@ -42,7 +42,7 @@ public class ChessGameManager {
 
         verifyTurn(board.findPiece(start));
         board.verifyPath(start, target);
-        if(board.findPiece(target).isKing()) {
+        if (board.findPiece(target).isKing()) {
             board.movePiece(start, target);
             OutputView.printBoard(board);
             OutputView.printEndGameMessage(turn);
@@ -65,4 +65,3 @@ public class ChessGameManager {
         }
     }
 }
-

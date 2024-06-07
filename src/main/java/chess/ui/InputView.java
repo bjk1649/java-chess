@@ -21,6 +21,7 @@ public class InputView {
     public static String extractStartPosition(String moveCommands) {
         return separateCommand(moveCommands).get(START_POSITION);
     }
+
     public static String extractTargetPosition(String moveCommands) {
         return separateCommand(moveCommands).get(TARGET_POSITION);
     }

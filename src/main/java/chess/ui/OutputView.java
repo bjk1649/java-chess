@@ -23,10 +23,10 @@ public class OutputView {
     }
 
     public static void printEndGameMessage(Team team) {
-        if(team.isSameTeam(Team.WHITE)) {
+        if (team.isSameTeam(Team.WHITE)) {
             System.out.println("WHITE 팀의 승리입니다.");
         }
-        if(team.isSameTeam(Team.BLACK)) {
+        if (team.isSameTeam(Team.BLACK)) {
             System.out.println("BLACK 팀의 승리입니다.");
         }
     }
@@ -38,13 +38,13 @@ public class OutputView {
         System.out.println("흰색 기물 점수 : " + whiteTeamScore);
         System.out.println("검은색 기물 점수 : " + blackTeamScore);
 
-        if(whiteTeamScore > blackTeamScore) {
+        if (whiteTeamScore > blackTeamScore) {
             System.out.println("WHITE 팀의 승리입니다.");
         }
-        if(whiteTeamScore < blackTeamScore) {
+        if (whiteTeamScore < blackTeamScore) {
             System.out.println("BLACK 팀의 승리입니다.");
         }
-        if(whiteTeamScore == blackTeamScore) {
+        if (whiteTeamScore == blackTeamScore) {
             System.out.println("무승부입니다.");
         }
     }
