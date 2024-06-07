@@ -28,7 +28,7 @@ public class ChessGameManagerTest {
 
     @DisplayName("검은색 킹이 잡혔을 때 게임이 종료 메세지가 출력되는지 확인한다")
     @Test
-    void blackkingDead() {
+    void blackKingDead() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         Board board = new Board();
