@@ -11,6 +11,7 @@ public class ChessGameManager {
     private static final String START_COMMAND = "start";
     private static final String STATUS_COMMAND = "status";
     private Team turn = Team.WHITE;
+    private boolean isGameOver = false;
 
     public void startNewGame() {
         OutputView.printStartMessage();
@@ -22,10 +23,12 @@ public class ChessGameManager {
     }
 
     public void proceedGame(Board board) {
+        if (isGameOver) {
+            return;
+        }
         String command = InputView.inputCommand();
         if (!command.equals(STATUS_COMMAND)) {
             moveProcess(board, command);
-            OutputView.printBoard(board);
             proceedGame(board);
         }
         if (command.equals(STATUS_COMMAND)) {
@@ -46,9 +49,11 @@ public class ChessGameManager {
             board.movePiece(start, target);
             OutputView.printBoard(board);
             OutputView.printEndGameMessage(turn);
-            System.exit(0);
+            isGameOver = true;
+            return;
         }
         board.movePiece(start, target);
+        OutputView.printBoard(board);
         turn = turn.changeTurn();
     }
 
