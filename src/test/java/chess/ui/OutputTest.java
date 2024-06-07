@@ -13,7 +13,7 @@ import java.io.PrintStream;
 public class OutputTest {
     @DisplayName("게임이 종료된 턴에 따라 승리 팀을 출력한다.")
     @Test
-    void kingDead() {
+    void printEndGameMessage() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         Team turn = Team.WHITE;
