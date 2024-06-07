@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.board.Board;
 import chess.position.Position;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,8 +12,12 @@ public class ScoreTest {
     @DisplayName("각 기물이 점수를 가지고 있는지 확인한다.")
     @Test
     void pieceScore() {
-        assertThat(Score.findScoreByPiece(new Pawn(Team.WHITE))).isEqualTo(Score.PAWN_SCORE);
-        assertThat(Score.findScoreByPiece(new Rook(Team.BLACK))).isEqualTo(Score.ROOK_SCORE);
+        SoftAssertions softly = new SoftAssertions();
+
+        softly.assertThat(Score.findScoreByPiece(new Pawn(Team.WHITE))).isEqualTo(Score.PAWN_SCORE);
+        softly.assertThat(Score.findScoreByPiece(new Rook(Team.BLACK))).isEqualTo(Score.ROOK_SCORE);
+
+        softly.assertAll();
     }
 
     @DisplayName("초기화된 체스판의 점수를 계산한다.")
