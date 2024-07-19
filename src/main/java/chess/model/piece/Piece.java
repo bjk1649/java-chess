@@ -43,10 +43,13 @@ public abstract class Piece {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Piece piece = (Piece) o;
-    return color == piece.color && this.getClass().equals(piece.getClass());
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Piece piece)) {
+      return false;
+    }
+    return color == piece.color;
   }
 
   @Override
