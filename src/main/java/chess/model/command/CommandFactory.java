@@ -4,6 +4,7 @@ import chess.model.command.commands.EndCommand;
 import chess.model.command.commands.MoveCommand;
 import chess.model.command.commands.StartCommand;
 import chess.model.ErrorMessage;
+import chess.model.command.commands.StatusCommand;
 import chess.model.position.Position;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,7 @@ public class CommandFactory {
   public static final String START_COMMAND = "start";
   public static final String END_COMMAND = "end";
   public static final String MOVE_COMMAND = "move";
+  public static final String STATUS_COMMAND = "status";
   private static final int COMMAND_INDEX = 0;
   private static final int SOURCE_POSITION_INDEX = 1;
   private static final int TARGET_POSITION_INDEX = 2;
@@ -34,9 +36,10 @@ public class CommandFactory {
       Position target = parsePosition(parts.get(TARGET_POSITION_INDEX));
       return new MoveCommand(source, target);
     });
+    commandMap.put(STATUS_COMMAND, parts -> new StatusCommand());
   }
 
-  public static CommandLauncher createCommand(String inputCommand) {
+  public CommandLauncher createCommand(String inputCommand) {
     List<String> commandParts = List.of(inputCommand.split(" "));
     String command = commandParts.get(COMMAND_INDEX);
 

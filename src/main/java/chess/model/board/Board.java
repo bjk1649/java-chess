@@ -5,7 +5,9 @@ import chess.model.piece.Piece;
 import chess.model.position.Color;
 import chess.model.position.Position;
 import chess.model.ErrorMessage;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Board {
 
@@ -15,20 +17,16 @@ public class Board {
     this.board = board;
   }
 
-  public void move(final Position from, final Position to, final Color turn) {
+  public Piece move(final Position from, final Position to, final Color turn) {
     validateMove(from, to, turn);
-    movePiece(from, to);
+    Piece piece = board.remove(from);
+    return board.put(to, piece);
   }
 
   private void validateMove(final Position from, final Position to, final Color turn) {
     validateNotEmpty(from);
     validateTurn(from, turn);
-
-    Piece destination = board.getOrDefault(to, null);
-    board.get(from).validateSameColor(destination);
-
-    Path path = board.get(from).findPath(from, to);
-    path.validatePath(board.keySet());
+    validatePath(from, to);
   }
 
   private void validateNotEmpty(final Position from) {
@@ -41,9 +39,16 @@ public class Board {
     board.get(from).validateTurn(turn);
   }
 
-  private void movePiece(final Position from, final Position to) {
-    Piece piece = board.remove(from);
-    board.put(to, piece);
+  private void validatePath(Position from, Position to) {
+    Piece source = board.get(from);
+    Piece destination = board.getOrDefault(to, null);
+    source.validateSameColor(destination);
+
+    Set<Position> positionsWithOutTarget = new HashSet<>(board.keySet());
+    positionsWithOutTarget.remove(to);
+
+    Path path = source.findPath(from, to);
+    path.validateObstacle(positionsWithOutTarget);
   }
 
   public Map<Position, Piece> getMap() {

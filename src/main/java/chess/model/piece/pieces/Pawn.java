@@ -3,6 +3,7 @@ package chess.model.piece.pieces;
 import chess.model.movement.Movement;
 import chess.model.movement.Path;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceInfo;
 import chess.model.position.Color;
 import chess.model.position.Position;
 
@@ -85,5 +86,10 @@ public class Pawn extends Piece {
 
   private boolean isInInitialPosition(final Position from) {
     return from.getRank().getValue() == INITIAL_POSITION_RANK.get(getColor());
+  }
+
+  @Override
+  public PieceInfo pieceType() {
+    return PieceInfo.PAWN;
   }
 }

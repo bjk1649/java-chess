@@ -18,6 +18,8 @@ public abstract class Piece {
 
   public abstract Path findPath(Position from, Position to);
 
+  public abstract PieceInfo pieceType();
+
   public void validateMovement(final Movement movement, List<Movement> availableMovements) {
     if (!availableMovements.contains(movement)) {
       throw new IllegalArgumentException(ErrorMessage.INVALID_DIRECTION.getMessage());

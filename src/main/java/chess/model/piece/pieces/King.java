@@ -5,6 +5,7 @@ import static chess.model.movement.MovementConverter.convertMovement;
 import chess.model.movement.Movement;
 import chess.model.movement.Path;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceInfo;
 import chess.model.position.Color;
 import chess.model.position.Position;
 import chess.model.ErrorMessage;
@@ -28,6 +29,11 @@ public class King extends Piece {
     validateAvailableDestination(from, to, movement);
 
     return new Path(List.of(to));
+  }
+
+  @Override
+  public PieceInfo pieceType() {
+    return PieceInfo.KING;
   }
 
   private void validateAvailableDestination(final Position from, final Position to, final Movement movement) {

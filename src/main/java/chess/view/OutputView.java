@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.model.piece.Piece;
+import chess.model.position.Color;
 import chess.model.position.File;
 import chess.model.position.Position;
 import chess.model.position.Rank;
@@ -31,6 +32,11 @@ public class OutputView {
               .map(board -> String.join("", board))
               .forEach(System.out::println);
     System.out.print(System.lineSeparator());
+  }
+
+  public void printCurrentTurnScore(Color currentTurn, double score) {
+    System.out.println("Current turn: " + currentTurn);
+    System.out.println("Score: " + score);
   }
 
   private void assignSymbols(final Map<Position, Piece> boardMap, final List<List<String>> chessBoard) {

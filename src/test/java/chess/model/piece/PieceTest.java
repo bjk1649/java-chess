@@ -59,7 +59,13 @@ class PieceTest {
 
     @Override
     public Path findPath(Position from, Position to) {
-      return null;
+      // 테스트 목적으로 간단히 작성
+      return new Path(List.of(to));
+    }
+
+    @Override
+    public PieceInfo pieceType() {
+      return PieceInfo.KING;
     }
   }
 }

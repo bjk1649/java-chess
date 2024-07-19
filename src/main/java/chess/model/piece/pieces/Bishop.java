@@ -5,6 +5,7 @@ import static chess.model.movement.MovementConverter.convertMovement;
 import chess.model.movement.Movement;
 import chess.model.movement.Path;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceInfo;
 import chess.model.position.Color;
 import chess.model.position.Position;
 import java.util.ArrayList;
@@ -37,5 +38,10 @@ public class Bishop extends Piece {
     }
 
     return new Path(positions);
+  }
+
+  @Override
+  public PieceInfo pieceType() {
+    return PieceInfo.BISHOP;
   }
 }

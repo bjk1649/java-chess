@@ -14,7 +14,7 @@ public class Path {
     this.positions = positions;
   }
 
-  public void validatePath(final Set<Position> keySet) {
+  public void validateObstacle(final Set<Position> keySet) {
     final List<Position> positions = new ArrayList<>(this.positions);
     positions.retainAll(keySet);
     if (!positions.isEmpty()) {

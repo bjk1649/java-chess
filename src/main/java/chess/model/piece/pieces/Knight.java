@@ -5,6 +5,7 @@ import static chess.model.movement.MovementConverter.convertMovement;
 import chess.model.movement.Movement;
 import chess.model.movement.Path;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceInfo;
 import chess.model.position.Color;
 import chess.model.position.Position;
 import chess.model.ErrorMessage;
@@ -37,5 +38,10 @@ public class Knight extends Piece {
     if (!from.calculateNextPosition(movement).equals(to)) { // 뛰어 넘을 수 있어 목적지만 판단
       throw new IllegalStateException(ErrorMessage.INVALID_DIRECTION.getMessage());
     }
+  }
+
+  @Override
+  public PieceInfo pieceType() {
+    return PieceInfo.KNIGHT;
   }
 }

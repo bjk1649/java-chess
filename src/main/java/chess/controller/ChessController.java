@@ -2,13 +2,14 @@ package chess.controller;
 
 import chess.model.command.CommandFactory;
 import chess.model.command.CommandLauncher;
-import chess.model.command.commands.EndCommand;
-import chess.model.command.commands.StartCommand;
 import chess.model.ErrorMessage;
 import chess.model.board.Board;
 import chess.model.board.InitialBoard;
+import chess.model.piece.Piece;
+import chess.model.piece.PieceInfo;
 import chess.model.position.Color;
 import chess.model.position.Position;
+import chess.model.score.ScoreCalculator;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -38,12 +39,13 @@ public class ChessController {
       try {
         String initialCommandInput = inputView.receiveCommand();
         receivedCommand = commandFactory.createCommand(initialCommandInput);
-        if (!(receivedCommand instanceof StartCommand) && !(receivedCommand instanceof EndCommand)) {
-          receivedCommand = null;
-          System.out.println(ErrorMessage.INVALID_START_COMMAND.getMessage());
+        if (receivedCommand.validateInitialCommandType()) {
+          break;
         }
-      } catch (IllegalArgumentException e) {
-        System.out.println(e.getMessage());
+        System.out.println(ErrorMessage.INVALID_INITIAL_COMMAND.getMessage());
+        receivedCommand = null;
+      } catch (IllegalArgumentException exception) {
+        System.out.println(exception.getMessage());
       }
     }
 
@@ -51,8 +53,14 @@ public class ChessController {
 
     while (isRunning) {
       try {
-        receivedCommand = commandFactory.createCommand(inputView.receiveCommand());
-        receivedCommand.execute(this);
+        String commandInput = inputView.receiveCommand();
+        receivedCommand = commandFactory.createCommand(commandInput);
+        if (receivedCommand.validateStatusCommandType()) {
+          calculateAndPrintCurrentTurnScore();
+        } else {
+          receivedCommand.execute(this);
+          currentTurn = currentTurn.changeTurn(currentTurn);
+        }
       } catch (IllegalArgumentException exception) {
         System.out.println(exception.getMessage());
       }
@@ -68,8 +76,15 @@ public class ChessController {
   }
 
   public void movePiece(Position source, Position target) {
-    board.move(source, target, currentTurn);
-    currentTurn = currentTurn.changeTurn(currentTurn);
+    Piece capturedPiece = board.move(source, target, currentTurn);
+    if (capturedPiece != null && capturedPiece.pieceType() == PieceInfo.KING) {
+      endGame();
+    }
     outputView.printBoard(board.getMap());
+  }
+
+  public void calculateAndPrintCurrentTurnScore() {
+    double score = ScoreCalculator.calculate(board.getMap(), currentTurn);
+    outputView.printCurrentTurnScore(currentTurn, score);
   }
 }
