@@ -1,7 +1,6 @@
 package chess.piece;
 
 import chess.position.Position;
-
 import java.util.List;
 
 public class Empty extends Piece {
@@ -17,5 +16,10 @@ public class Empty extends Piece {
     @Override
     public boolean isEmpty() {
         return true;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
     }
 }

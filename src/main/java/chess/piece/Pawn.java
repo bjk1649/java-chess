@@ -2,6 +2,7 @@ package chess.piece;
 
 import static chess.move.Movement.*;
 
+import chess.move.Direction;
 import chess.move.Movement;
 import chess.position.Position;
 import java.util.ArrayList;
@@ -22,13 +23,13 @@ public class Pawn extends Piece {
     public List<Position> findPath(Position start, Position target) {
         List<Position> positions = new ArrayList<>();
         List<Movement> movements = new ArrayList<>();
-        if (this.checkSameTeam(Team.WHITE)) {
+        if (this.isSameTeam(Team.WHITE)) {
             movements.addAll(updateWhitePawnMovableDirection(start));
             Movement movement = findMovement(movements, start, target);
             Position next = start.findNextPosition(movement);
             positions.add(next);
         }
-        if (this.checkSameTeam(Team.BLACK)) {
+        if (this.isSameTeam(Team.BLACK)) {
             movements.addAll(updateBlackPawnMovableDirection(start));
             Movement movement = findMovement(movements, start, target);
             Position next = start.findNextPosition(movement);
@@ -59,26 +60,29 @@ public class Pawn extends Piece {
 
     @Override
     public void checkTargetPosition(Piece targetPiece, Position start, Position target) {
-        if (this.checkSameTeam(targetPiece.getTeam())) {
+        if (this.isSameTeam(targetPiece)) {
             throw new IllegalStateException("같은 팀 기물이 있는 위치로 이동 할 수 없습니다.");
-        }
-        else if (!this.checkSameTeam(targetPiece.getTeam())) {
+        } else if (!this.isSameTeam(targetPiece)) {
             checkEnemyPieceByPawn(targetPiece, start, target);
         }
     }
 
     private void checkEnemyPieceByPawn(Piece targetPiece, Position start, Position target) {
-        int fileGap = start.fileGap(target);
-        if (targetPiece.isEmpty() && fileGap != STATIONARY) {
+        if (targetPiece.isEmpty() && !Direction.isStationary(start, target)) {
             throw new IllegalArgumentException("폰은 상대 기물을 공격할 때만 대각선으로 이동할 수 있습니다.");
         }
-        if (!targetPiece.isEmpty() && fileGap == STATIONARY) {
+        if (!targetPiece.isEmpty() && Direction.isStationary(start, target)) {
             throw new IllegalArgumentException("폰은 정면에 있는 상대 기물을 공격할 수 없습니다.");
         }
     }
 
     @Override
     public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
         return false;
     }
 }

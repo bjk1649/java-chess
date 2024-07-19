@@ -1,16 +1,17 @@
 package chess;
 
 import chess.board.Board;
+import chess.piece.Piece;
 import chess.ui.InputView;
 import chess.ui.OutputView;
 import chess.position.Position;
 import chess.piece.Team;
-import java.util.List;
 
 public class ChessGameManager {
     private static final String START_COMMAND = "start";
-    private static final String END_COMMAND = "end";
+    private static final String STATUS_COMMAND = "status";
     private Team turn = Team.WHITE;
+    private boolean isGameOver = false;
 
     public void startNewGame() {
         OutputView.printStartMessage();
@@ -22,14 +23,16 @@ public class ChessGameManager {
     }
 
     public void proceedGame(Board board) {
+        if (isGameOver) {
+            return;
+        }
         String command = InputView.inputCommand();
-        if (!command.equals(END_COMMAND)) {
+        if (!command.equals(STATUS_COMMAND)) {
             moveProcess(board, command);
-            OutputView.printBoard(board);
             proceedGame(board);
         }
-        if (command.equals(END_COMMAND)) {
-            System.out.println("게임 종료");
+        if (command.equals(STATUS_COMMAND)) {
+            OutputView.printEndGameByStatusMessage(board);
         }
     }
 
@@ -40,9 +43,17 @@ public class ChessGameManager {
         Position start = searchPosition(startPosition);
         Position target = searchPosition(targetPosition);
 
-        verifyTurn(board.findPiece(start).getTeam());
+        verifyTurn(board.findPiece(start));
         board.verifyPath(start, target);
+        if (board.findPiece(target).isKing()) {
+            board.movePiece(start, target);
+            OutputView.printBoard(board);
+            OutputView.printEndGameMessage(turn);
+            isGameOver = true;
+            return;
+        }
         board.movePiece(start, target);
+        OutputView.printBoard(board);
         turn = turn.changeTurn();
     }
 
@@ -53,8 +64,8 @@ public class ChessGameManager {
         return new Position(file, rank);
     }
 
-    public void verifyTurn(Team team) {
-        if (!team.isSameTeam(turn)) {
+    public void verifyTurn(Piece piece) {
+        if (!piece.isSameTeam(turn)) {
             throw new IllegalStateException("상대방 기물을 이동시킬 수 없습니다.");
         }
     }

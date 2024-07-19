@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
-    private final Map<Position, Piece> board; //좌표, 기물종류
+    private final Map<Position, Piece> board;
 
     public Board() {
         this.board = new HashMap<>();
@@ -51,7 +51,7 @@ public class Board {
 
     private void initializeEmptyPiece() {
         for (int rank = Position.START_EMPTY_PIECE_RANK; rank <= Position.END_EMPTY_PIECE_RANK; rank++) {
-            for(int file = Position.FIRST_FILE; file <= Position.LAST_FILE; file++) {
+            for (int file = Position.FIRST_FILE; file <= Position.LAST_FILE; file++) {
                 board.put(new Position(file, rank), new Empty(Team.NONE));
             }
         }
@@ -78,6 +78,10 @@ public class Board {
         if (!this.findPiece(position).isEmpty() && !position.equals(target)) {
             throw new IllegalArgumentException("다른 기물이 존재해서 지나갈 수 없습니다.");
         }
+    }
+
+    public double calculateScore(Team team) {
+        return Score.calculateScore(this, team);
     }
 
     public Piece findPiece(Position position) {

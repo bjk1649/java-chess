@@ -23,7 +23,7 @@ public class PieceSymbol {
     public static String convertTypeToSymbol(Piece piece) {
         String symbol = symbolMap.get(piece.getClass());
 
-        if (piece.getTeam() == Team.WHITE) {
+        if (piece.isSameTeam(Team.WHITE)) {
             return symbol.toLowerCase();
         }
         return symbol;

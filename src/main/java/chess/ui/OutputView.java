@@ -2,6 +2,7 @@ package chess.ui;
 
 import chess.board.Board;
 import chess.piece.Piece;
+import chess.piece.Team;
 import chess.position.Position;
 import chess.position.Rank;
 
@@ -19,6 +20,33 @@ public class OutputView {
             System.out.println();
         }
         System.out.println();
+    }
+
+    public static void printEndGameMessage(Team team) {
+        if (team.isSameTeam(Team.WHITE)) {
+            System.out.println("WHITE 팀의 승리입니다.");
+        }
+        if (team.isSameTeam(Team.BLACK)) {
+            System.out.println("BLACK 팀의 승리입니다.");
+        }
+    }
+
+    public static void printEndGameByStatusMessage(Board board) {
+        double whiteTeamScore = board.calculateScore(Team.WHITE);
+        double blackTeamScore = board.calculateScore(Team.BLACK);
+
+        System.out.println("흰색 기물 점수 : " + whiteTeamScore);
+        System.out.println("검은색 기물 점수 : " + blackTeamScore);
+
+        if (whiteTeamScore > blackTeamScore) {
+            System.out.println("WHITE 팀의 승리입니다.");
+        }
+        if (whiteTeamScore < blackTeamScore) {
+            System.out.println("BLACK 팀의 승리입니다.");
+        }
+        if (whiteTeamScore == blackTeamScore) {
+            System.out.println("무승부입니다.");
+        }
     }
 
     private static void printOneRank(Board board, Rank rank) {
