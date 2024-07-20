@@ -6,6 +6,7 @@ import chess.model.command.CommandLauncher;
 public class EndCommand implements CommandLauncher {
   @Override
   public void execute(ChessController controller) {
+    controller.printScoreAndWinningColor();
     controller.endGame();
   }
 

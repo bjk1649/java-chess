@@ -57,10 +57,10 @@ public class ChessController {
         receivedCommand = commandFactory.createCommand(commandInput);
         if (receivedCommand.validateStatusCommandType()) {
           calculateAndPrintCurrentTurnScore();
-        } else {
-          receivedCommand.execute(this);
-          currentTurn = currentTurn.changeTurn(currentTurn);
+          continue;
         }
+        receivedCommand.execute(this);
+        currentTurn = currentTurn.changeTurn();
       } catch (IllegalArgumentException exception) {
         System.out.println(exception.getMessage());
       }
@@ -86,5 +86,21 @@ public class ChessController {
   public void calculateAndPrintCurrentTurnScore() {
     double score = ScoreCalculator.calculate(board.getMap(), currentTurn);
     outputView.printCurrentTurnScore(currentTurn, score);
+  }
+
+  public void printScoreAndWinningColor() {
+    double currentTurnScore = ScoreCalculator.calculate(board.getMap(), currentTurn);
+    double opponentScore = ScoreCalculator.calculate(board.getMap(), currentTurn.changeTurn());
+    outputView.printCurrentScore(currentTurn, currentTurnScore);
+    outputView.printCurrentScore(currentTurn.changeTurn(), opponentScore);
+    if (currentTurnScore > opponentScore) {
+      outputView.printWinningColor(currentTurn);
+    }
+    if (opponentScore > currentTurnScore) {
+      outputView.printWinningColor(currentTurn.changeTurn());
+    }
+    if (currentTurnScore == opponentScore) {
+      outputView.printDraw();
+    }
   }
 }

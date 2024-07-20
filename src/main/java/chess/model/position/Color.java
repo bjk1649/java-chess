@@ -9,8 +9,8 @@ public enum Color {
     return this == color;
   }
 
-  public Color changeTurn(Color currentTurn) {
-    if (currentTurn == WHITE) {
+  public Color changeTurn() {
+    if (this == WHITE) {
       return BLACK;
     }
     return WHITE;

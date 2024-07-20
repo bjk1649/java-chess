@@ -21,7 +21,7 @@ public class OutputView {
     System.out.println("> 체스 게임을 시작합니다.");
     System.out.println("> 게임 시작 : start");
     System.out.println("> 게임 종료 : end");
-    System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+    System.out.println("> 게임 이동 : move source 위치 target 위치 - 예. move b2 b3");
   }
 
   public void printBoard(final Map<Position, Piece> boardMap) {
@@ -57,5 +57,17 @@ public class OutputView {
     return IntStream.range(0, BOARD_SIZE)
                     .mapToObj(it -> new ArrayList<>(Collections.nCopies(BOARD_SIZE, Symbol.EMPTY.getSymbol())))
                     .collect(Collectors.toList());
+  }
+
+  public void printCurrentScore(Color currentTurn, double score) {
+    System.out.println("Color: " + currentTurn + ", Score: " + score);
+  }
+
+  public void printWinningColor(Color currentTurn) {
+    System.out.println("Winning Color: " + currentTurn);
+  }
+
+  public void printDraw() {
+    System.out.println("Draw");
   }
 }
