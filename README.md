@@ -33,11 +33,11 @@
 - [x] 체스 말이 반환한 경로 안에 다른 체스 말이 있는지 검사
   - [x] 경로 안에 다른 체스 말이 있다면 이동할 수 없다 <- Path
 - **입력**
-- [x] move source위치 target위치을 실행해 이동한다
+- [x] move source 위치 target 위치을 실행해 이동한다
 
 ## 3단계 - 승패 및 점수
 ### 기능 요구 사항
-- [x] King이 잡혔을 때 게임을 종료해야 한다
+- [x] King 이 잡혔을 때 게임을 종료해야 한다
   - [x] 체스판에서 잡힌 말을 반환
   - [x] 체스 말에서 해당 말의 타입을 반환
 - [x] status 명령어를 입력하면 점수를 출력
@@ -49,11 +49,35 @@
 - **DB 연결 전 기능**
 - [x] end 명령어를 입력하면 각자의 점수와 승리 팀을 출력한다
   - [x] 점수를 계산해서 점수가 높은 팀이 승리한다
-- **DAO**
-- [ ] 이전에 하던 체스 게임을 다시 시작할 수 있어야 한다
-  - [ ] 사용자 ID로 사용자 엔티티를 조회한다
-    - [ ] 사용자 ID를 저장한다 (이름은 10자 미만)
-  - [ ] 사용자 ID로 체스 게임을 조회한다
-    - [ ] 사용자가 현재 진행 중인 체스 게임(체스판)을 저장한다
-    - [ ] 진행 중이던 게임을 이어서 시작할 수 있다
-    - [ ] 새로운 게임을 시작할 수 있다
+- **DB 연결**
+- [ ] 애플리케이션을 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있어야 한다
+  - [ ] 이어하기
+    - 이전에 진행하던 게임이 있다면 이어서 게임을 시작한다
+    - 이전에 진행하던 게임이 없다면 새로운 게임을 시작한다
+  - [ ] 새로하기
+    - 이전에 진행하던 게임이 있어도 새로운 게임을 시작한다
+- 현재 턴을 따로 저장해야한다 -> ChessController 리팩토링
+- [ ] 피스를 이동할 때 마다 피스 테이블을 업데이트한다
+- [ ] 체스 게임을 저장할 수 있다 -> ChessDao
+- [ ] 체스 게임을 찾을 수 있다
+- [ ] 체스 게임을 삭제할 수 있다
+
+```
+CREATE TABLE chess_games (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    current_turn VARCHAR(16) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE pieces (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    game_id BIGINT NOT NULL,
+    piece_file INT NOT NULL,
+    piece_rank INT NOT NULL,
+    color VARCHAR(16) NOT NULL,
+    type VARCHAR(16) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (game_id) REFERENCES games(id)
+);
+
+```
