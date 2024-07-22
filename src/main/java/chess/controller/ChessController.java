@@ -56,8 +56,8 @@ public class ChessController {
         String commandInput = inputView.receiveCommand();
         receivedCommand = commandFactory.createCommand(commandInput);
         if (receivedCommand.validateStatusCommandType()) {
-          calculateAndPrintCurrentTurnScore();
-          continue;
+          receivedCommand.execute(this);
+          continue; // 명령이 status 일 경우 턴을 바꾸지 않음
         }
         receivedCommand.execute(this);
         currentTurn = currentTurn.changeTurn();
@@ -77,9 +77,7 @@ public class ChessController {
 
   public void movePiece(Position source, Position target) {
     Piece capturedPiece = board.move(source, target, currentTurn);
-    if (capturedPiece != null && capturedPiece.pieceType() == PieceInfo.KING) {
-      endGame();
-    }
+    checkAndHandleKingCapture(capturedPiece, currentTurn);
     outputView.printBoard(board.getMap());
   }
 
@@ -101,6 +99,15 @@ public class ChessController {
     }
     if (currentTurnScore == opponentScore) {
       outputView.printDraw();
+    }
+  }
+
+  private void checkAndHandleKingCapture(Piece capturedPiece, Color currentTurn) {
+    if (capturedPiece != null && capturedPiece.pieceType() == PieceInfo.KING) {
+      endGame();
+      double currentTurnScore = ScoreCalculator.calculate(board.getMap(), currentTurn);
+      outputView.printCurrentScore(currentTurn, currentTurnScore);
+      outputView.printWinningColor(currentTurn);
     }
   }
 }
