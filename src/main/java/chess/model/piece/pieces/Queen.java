@@ -12,6 +12,7 @@ import chess.model.position.Position;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class Queen extends Piece {
 
@@ -25,7 +26,7 @@ public class Queen extends Piece {
   }
 
   @Override
-  public Path findPath(final Position from, final Position to) {
+  public Path findPath(final Position from, final Position to, final Map<Position, Piece> board) {
     Movement movement = convertMovement(from, to);
     validateMovement(movement, availableMovements);
 

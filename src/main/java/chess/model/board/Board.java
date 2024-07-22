@@ -47,7 +47,7 @@ public class Board {
     Set<Position> positionsWithOutTarget = new HashSet<>(board.keySet());
     positionsWithOutTarget.remove(to);
 
-    Path path = source.findPath(from, to);
+    Path path = source.findPath(from, to, board);
     path.validateObstacle(positionsWithOutTarget);
   }
 

@@ -10,6 +10,7 @@ import chess.model.position.Color;
 import chess.model.position.Position;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Bishop extends Piece {
 
@@ -21,7 +22,7 @@ public class Bishop extends Piece {
   }
 
   @Override
-  public Path findPath(Position from, Position to) {
+  public Path findPath(Position from, Position to, final Map<Position, Piece> board) {
     Movement movement = convertMovement(from, to);
     validateMovement(movement, availableMovements);
 

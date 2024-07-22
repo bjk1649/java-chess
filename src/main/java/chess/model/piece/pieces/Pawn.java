@@ -41,24 +41,28 @@ public class Pawn extends Piece {
   }
 
   @Override
-  public Path findPath(final Position from, final Position to) {
+  public Path findPath(final Position from, final Position to, final Map<Position, Piece> board) {
     Movement movement = convertMovement(from, to);
-
-    if (isAttackMovement(movement)) { // 공격 움직임인 경우
-      return findPathForAttackMovement(to, movement);
+    if (isAttackMovement(movement)) {
+      return findPathForAttackMovement(to, movement, board);
     }
-
-    return findPathForEmptyPosition(from, to, movement); // 빈 칸으로 이동하는 경우
+    return findPathForEmptyPosition(from, to, movement);
   }
 
   private boolean isAttackMovement(final Movement movement) {
     return AVAILABLE_ATTACK_MOVEMENTS.get(getColor()).contains(movement);
   }
 
-  private Path findPathForAttackMovement(final Position to, final Movement movement) {
+  private Path findPathForAttackMovement(final Position to, final Movement movement, final Map<Position, Piece> board) {
     validateMovement(movement, AVAILABLE_ATTACK_MOVEMENTS.get(getColor()));
-
+    validateAttackMovement(to, board);
     return new Path(List.of(to));
+  }
+  private void validateAttackMovement(final Position to, final Map<Position, Piece> board) {
+    Piece targetPiece = board.get(to);
+    if (targetPiece == null || targetPiece.getColor() == this.getColor()) {
+      throw new IllegalArgumentException(ErrorMessage.INVALID_DIRECTION.getMessage());
+    }
   }
 
   private Path findPathForEmptyPosition(final Position from, final Position to, final Movement movement) {

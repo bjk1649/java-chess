@@ -6,6 +6,7 @@ import chess.model.position.Color;
 import chess.model.position.Position;
 import chess.model.ErrorMessage;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -16,7 +17,7 @@ public abstract class Piece {
     this.color = color;
   }
 
-  public abstract Path findPath(Position from, Position to);
+  public abstract Path findPath(Position from, Position to, Map<Position, Piece> board);
 
   public abstract PieceInfo pieceType();
 

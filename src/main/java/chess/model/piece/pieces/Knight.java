@@ -11,6 +11,7 @@ import chess.model.position.Position;
 import chess.model.ErrorMessage;
 
 import java.util.List;
+import java.util.Map;
 
 public class Knight extends Piece {
 
@@ -25,7 +26,7 @@ public class Knight extends Piece {
   }
 
   @Override
-  public Path findPath(Position from, Position to) {
+  public Path findPath(Position from, Position to, final Map<Position, Piece> board) {
     Movement movement = convertMovement(from, to);
     validateMovement(movement, availableMovements);
 
