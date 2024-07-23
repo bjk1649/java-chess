@@ -65,19 +65,19 @@
 - [ ] 체스 게임을 삭제할 수 있다
 
 ```
-CREATE TABLE chess_games (
+CREATE TABLE chess_game (
     id BIGINT NOT NULL AUTO_INCREMENT,
     current_turn VARCHAR(16) NOT NULL,
     PRIMARY KEY (id)
 );
 
-CREATE TABLE pieces (
+CREATE TABLE piece (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    game_id BIGINT NOT NULL,
+    chess_game_id BIGINT NOT NULL,
     piece_file INT NOT NULL,
     piece_rank INT NOT NULL,
-    color VARCHAR(16) NOT NULL,
-    type VARCHAR(16) NOT NULL,
+    color VARCHAR(16),
+    type VARCHAR(16),
     PRIMARY KEY (id),
     FOREIGN KEY (game_id) REFERENCES games(id)
 );
