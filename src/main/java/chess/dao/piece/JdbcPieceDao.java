@@ -24,14 +24,17 @@ public class JdbcPieceDao implements PieceDao {
   public void insert(final long chessGameId, final Position position, final Piece piece) {
     final String query = "INSERT INTO piece (chess_game_id, piece_file, piece_rank, color, type) " +
         "VALUES (?, ?, ?, ?, ?)";
-    jdbcTemplate.executeUpdate(query, chessGameId, position.getFile(),
-        position.getRank(), piece.getColor().name(), piece.pieceType().name());
+    jdbcTemplate.executeUpdate(query, chessGameId,
+        position.getFile().getValue(),
+        position.getRank().getValue(),
+        piece.getColor().name(),
+        piece.pieceType().name());
   }
 
   @Override
   public void delete(final long chessGameId, final Position position) {
     final String query = "DELETE FROM piece WHERE piece_file = ? AND piece_rank = ?";
-    jdbcTemplate.executeUpdate(query, position.getFile(), position.getRank());
+    jdbcTemplate.executeUpdate(query, position.getFile().getValue(), position.getRank().getValue());
   }
 
   @Override
