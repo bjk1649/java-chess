@@ -1,4 +1,4 @@
-package chess.model;
+package chess.domain;
 
 public enum ErrorMessage {
   INVALID_INITIAL_COMMAND("[ERROR] 게임 시작 명령은 start, 게임 종료 명령은 end 여야 합니다."),
@@ -13,7 +13,10 @@ public enum ErrorMessage {
   SAME_COLOR_PIECE("[ERROR] 같은 색의 말로는 이동할 수 없습니다."),
   SAME_POSITION("[ERROR] 출발지와 목적지가 동일하여 이동할 수 없습니다."),
   INVALID_MOVE_COMMAND("[ERROR] 이동은 move source 위치 target 위치여야 합니다."),
-  INVALID_COMMAND("[ERROR] 유효하지 않은 명령입니다.");
+  INVALID_COMMAND("[ERROR] 유효하지 않은 명령입니다."),
+
+  ALREADY_RUNNING("[ERROR] 이미 진행 중인 게임입니다."),
+  NOT_RUNNING("[ERROR] 진행 중인 게임이 아닙니다.");
 
   private final String message;
 
