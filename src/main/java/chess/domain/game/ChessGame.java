@@ -16,20 +16,24 @@ public class ChessGame {
 
   public ChessGame(long id, Board board, Color turn) {
     this.id = id;
-    this.state = State.WAITING;
+    this.state = State.RUN;
     this.board = board;
     this.turn = turn;
   }
 
   public void start() {
-    if (state == State.RUNNING) {
-      throw new IllegalArgumentException(ErrorMessage.ALREADY_RUNNING.getMessage());
+    if (state == State.START) {
+      throw new IllegalArgumentException(ErrorMessage.ALREADY_START.getMessage());
     }
-    this.state = State.RUNNING;
+    this.state = State.START;
   }
 
   public void end() {
-    this.state = State.FINISHED;
+    this.state = State.END;
+  }
+
+  public void checkmate() {
+    this.state = State.CHECKMATE;
   }
 
   public void movePiece(Position source, Position target) {
@@ -45,7 +49,7 @@ public class ChessGame {
   }
 
   private void checkRunning() {
-    if (state == State.RUNNING) {
+    if (state == State.RUN) {
       return;
     }
     throw new IllegalArgumentException(ErrorMessage.NOT_RUNNING.getMessage());
@@ -53,11 +57,27 @@ public class ChessGame {
 
   private void checkKingCaptured(Piece capturedPiece) {
     if (capturedPiece != null && capturedPiece.pieceType() == PieceInfo.KING) {
-      end();
+      checkmate();
     }
   }
 
   private void changeTurn() {
     turn = turn.changeTurn();
+  }
+
+  public Color getTurn() {
+    return turn;
+  }
+
+  public long getId() {
+    return id;
+  }
+
+  public Board getBoard() {
+    return board;
+  }
+
+  public State getState() {
+    return state;
   }
 }
