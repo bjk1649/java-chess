@@ -17,6 +17,6 @@ public enum InitialCommand {
     return Arrays.stream(values())
                  .filter(command -> command.command.equals(value))
                  .findAny()
-                 .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_COMMAND.getMessage()));
+                 .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_INITIAL_COMMAND.getMessage()));
   }
 }

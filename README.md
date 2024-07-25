@@ -50,24 +50,24 @@
 - [x] end 명령어를 입력하면 각자의 점수와 승리 팀을 출력한다
   - [x] 점수를 계산해서 점수가 높은 팀이 승리한다
 - **DB 연결**
-- [ ] 애플리케이션을 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있어야 한다
-  - [ ] 이어하기
+- [x] 애플리케이션을 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있어야 한다
+  - [x] 이어하기
     - 이전에 진행하던 게임이 있다면 이어서 게임을 시작한다
     - 이전에 진행하던 게임이 없다면 새로운 게임을 시작한다
-  - [ ] 새로하기
+  - [x] 새로하기
     - 이전에 진행하던 게임이 있어도 새로운 게임을 시작한다
 
-- chessGame(id를 갖고있는<-방 번호가 됨)을 따로 저장, Turn 을 저장할 필요가 있음, 게임의 진행 상태를 저장할 필요가 있음
+- chessGame 을 따로 저장, Turn 을 저장할 필요가 있음, 게임의 진행 상태를 저장할 필요가 있음
 
-- [ ] 피스를 이동할 때 마다 피스 테이블을 업데이트한다
-- [ ] 체스 게임을 저장할 수 있다
-- [ ] 체스 게임을 찾을 수 있다
-- [ ] 체스 게임을 삭제할 수 있다
+- [x] 피스를 이동할 때 마다 피스 테이블을 업데이트한다
+- [x] 체스 게임을 저장할 수 있다
+- [x] 체스 게임을 찾을 수 있다
+- [x] 체스 게임을 삭제할 수 있다
 
 ```
 CREATE TABLE chess_game (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    current_turn VARCHAR(16) NOT NULL,
+    turn VARCHAR(16) NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -78,8 +78,7 @@ CREATE TABLE piece (
     piece_rank INT NOT NULL,
     color VARCHAR(16),
     type VARCHAR(16),
-    PRIMARY KEY (id),
-    FOREIGN KEY (game_id) REFERENCES games(id)
+    PRIMARY KEY (id)
 );
 
 ```

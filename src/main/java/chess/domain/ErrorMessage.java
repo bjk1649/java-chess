@@ -1,7 +1,7 @@
 package chess.domain;
 
 public enum ErrorMessage {
-  INVALID_INITIAL_COMMAND("[ERROR] 게임 시작 명령은 start, 게임 종료 명령은 end 여야 합니다."),
+  INVALID_INITIAL_COMMAND("[ERROR] 이어하기는 continue, 새로하기는 new 입니다."),
   MISMATCH_FILE_ARGUMENT("[ERROR] 잘못된 파일 규격입니다."),
   MISMATCH_RANK_ARGUMENT("[ERROR] 잘못된 랭크 규격입니다."),
   MISMATCH_SYMBOL("[ERROR] 잘못된 피스 타입입니다."),
@@ -15,7 +15,7 @@ public enum ErrorMessage {
   INVALID_MOVE_COMMAND("[ERROR] 이동은 move source 위치 target 위치여야 합니다."),
   INVALID_COMMAND("[ERROR] 유효하지 않은 명령입니다."),
 
-  ALREADY_RUNNING("[ERROR] 이미 진행 중인 게임입니다."),
+  ALREADY_START("[ERROR] 이미 진행 중인 게임입니다."),
   NOT_RUNNING("[ERROR] 진행 중인 게임이 아닙니다.");
 
   private final String message;
