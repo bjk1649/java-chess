@@ -3,6 +3,7 @@ package chess.board;
 import chess.piece.*;
 import chess.position.Position;
 import chess.position.StartPiecePosition;
+import chess.ui.PieceSymbol;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +72,33 @@ public class Board {
 
         for (Position position : path) {
             checkPositionIsEmpty(position, target);
+        }
+    }
+
+    public String convertBoardStateToString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int rank = Position.LAST_RANK; rank >= Position.FIRST_RANK; rank--) {
+            for (int file = Position.FIRST_FILE; file <= Position.LAST_FILE; file++) {
+                Position position = new Position(file, rank);
+                Piece piece = board.get(position);
+                stringBuilder.append(PieceSymbol.convertTypeToSymbol(piece));
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+
+    public void loadBoardState(String boardState) {
+        board.clear();
+        Piece piece;
+        int index = 0;
+        for (int rank = Position.LAST_RANK; rank >= Position.FIRST_RANK; rank--) {
+            for (int file = Position.FIRST_FILE; file <= Position.LAST_FILE; file++) {
+                char symbol = boardState.charAt(index++);
+                piece = PieceSymbol.convertSymbolToPiece(symbol);
+                Position position = new Position(file, rank);
+                board.put(position, piece);
+            }
         }
     }
 
