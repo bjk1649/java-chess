@@ -15,4 +15,9 @@ public enum Team {
         }
         return BLACK;
     }
+
+    public Team getTurnByBinary(int n) {
+        if (n == 0) return Team.BLACK;
+        return Team.WHITE;
+    }
 }
