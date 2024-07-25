@@ -45,6 +45,7 @@ public class ChessController {
 
   private void start(ChessGame chessGame) {
     chessGame.start();
+    outputView.printBoard(chessGame.getBoard().getMap());
   }
 
   private void end(ChessGame chessGame) {
@@ -62,21 +63,21 @@ public class ChessController {
     final Position target = parsePosition(commandParts.get(TARGET_POSITION_INDEX));
     chessGame.movePiece(source, target);
     chessGameService.updatePiece(chessGame, source, target);
+    outputView.printBoard(chessGame.getBoard().getMap());
   }
 
   public void run() throws SQLException {
     ChessGame chessGame = initializeChessGame(receiveInitialCommand());
 
     while (isRunnable(chessGame)) {
-      printChessBoard(chessGame);
       executeCommand(chessGame);
     }
     processIfKingCaptured(chessGame);
   }
 
   private boolean isRunnable(ChessGame chessGame) {
-    return chessGame.getState().equals(State.RUN)
-        || chessGame.getState().equals(State.START);
+    return chessGame.getState().equals(State.RUNNING)
+        || chessGame.getState().equals(State.WAITING);
   }
 
   private void processIfKingCaptured(final ChessGame chessGame) {
@@ -98,12 +99,6 @@ public class ChessController {
     }
   }
 
-  private void printChessBoard(final ChessGame chessGame) {
-    if (chessGame.getState().equals(State.RUN)) {
-      outputView.printBoard(chessGame.getBoard().getMap());
-    }
-  }
-
   private InitialCommand receiveInitialCommand() {
     try {
       outputView.printInitialMessage();
@@ -117,7 +112,7 @@ public class ChessController {
 
   private ChessGame initializeChessGame(InitialCommand command) throws SQLException {
     ChessGame chessGame = findChessGameIfContinue(command);
-
+    // new 입력하면 메서드가 작동하지 않아 null 로 반환된다
     if (chessGame == null) {
       outputView.printNewGameMessage();
       chessGameService.deleteChessGame();

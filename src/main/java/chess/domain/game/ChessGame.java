@@ -16,20 +16,20 @@ public class ChessGame {
 
   public ChessGame(long id, Board board, Color turn) {
     this.id = id;
-    this.state = State.RUN;
+    this.state = State.WAITING;
     this.board = board;
     this.turn = turn;
   }
 
   public void start() {
-    if (state == State.START) {
+    if (state == State.RUNNING) {
       throw new IllegalArgumentException(ErrorMessage.ALREADY_START.getMessage());
     }
-    this.state = State.START;
+    this.state = State.RUNNING;
   }
 
   public void end() {
-    this.state = State.END;
+    this.state = State.ENDED;
   }
 
   public void checkmate() {
@@ -49,7 +49,7 @@ public class ChessGame {
   }
 
   private void checkRunning() {
-    if (state == State.RUN) {
+    if (state == State.RUNNING) {
       return;
     }
     throw new IllegalArgumentException(ErrorMessage.NOT_RUNNING.getMessage());

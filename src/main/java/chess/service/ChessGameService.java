@@ -4,7 +4,6 @@ import chess.dao.chessGame.ChessGameDao;
 import chess.dao.chessGame.dto.FindResponseDto;
 import chess.dao.chessGame.dto.SaveRequestDto;
 import chess.dao.piece.PieceDao;
-import chess.domain.ErrorMessage;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
@@ -48,18 +47,12 @@ public class ChessGameService {
   }
 
   public void updatePiece(final ChessGame chessGame, final Position sourcePosition, final Position targetPosition) {
-    final Piece piece = findSourcePiece(chessGame, sourcePosition);
-    if (piece == null) {
-      return;
-    }
+    final Piece piece = chessGame.getBoard().getPiece(targetPosition);
+
     pieceDao.delete(chessGame.getId(), targetPosition);
     pieceDao.insert(chessGame.getId(), targetPosition, piece);
     pieceDao.delete(chessGame.getId(), sourcePosition);
-  }
-
-  private Piece findSourcePiece(final ChessGame chessGame, final Position sourcePosition) {
-    final Board board = chessGame.getBoard();
-    return board.getPiece(sourcePosition);
+    chessGameDao.updateTurn(chessGame.getId(), chessGame.getTurn());
   }
 
   public void deleteChessGame() {
