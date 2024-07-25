@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.board.Board;
+import chess.game.ChessGameManager;
 import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Team;
