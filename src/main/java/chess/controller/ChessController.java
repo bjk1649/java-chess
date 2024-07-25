@@ -1,113 +1,163 @@
 package chess.controller;
 
-import chess.model.command.CommandFactory;
-import chess.model.command.CommandLauncher;
-import chess.model.ErrorMessage;
-import chess.model.board.Board;
-import chess.model.board.InitialBoard;
-import chess.model.piece.Piece;
-import chess.model.piece.PieceInfo;
-import chess.model.position.Color;
-import chess.model.position.Position;
-import chess.model.score.ScoreCalculator;
+import chess.controller.command.Command;
+import chess.controller.command.InitialCommand;
+import chess.domain.game.ChessGame;
+import chess.domain.game.State;
+import chess.domain.position.Color;
+import chess.domain.position.Position;
+import chess.service.ChessGameService;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.sql.SQLException;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
 
 public class ChessController {
 
+  private static final int COMMAND_INDEX = 0;
+  private static final int SOURCE_POSITION_INDEX = 1;
+  private static final int TARGET_POSITION_INDEX = 2;
+
+  private final Map<Command, BiConsumer<ChessGame, List<String>>> commands =
+      new EnumMap<>(Command.class);
+  private final ChessGameService chessGameService;
+
   private final InputView inputView;
   private final OutputView outputView;
-  private final CommandFactory commandFactory;
-  private final Board board;
-  private Color currentTurn;
-  private boolean isRunning;
 
-  public ChessController(InputView inputView, OutputView outputView, CommandFactory commandFactory, InitialBoard initialBoard) {
+  public ChessController(ChessGameService chessGameService, InputView inputView,
+      OutputView outputView) {
+    putCommands();
+    this.chessGameService = chessGameService;
     this.inputView = inputView;
     this.outputView = outputView;
-    this.commandFactory = commandFactory;
-    this.board = initialBoard.createInitialBoard();
-    this.currentTurn = Color.WHITE;
-    this.isRunning = true;
   }
 
-  public void runChess() {
-    outputView.printStartMessage();
-    CommandLauncher receivedCommand = null;
+  private void putCommands() {
+    commands.put(Command.START, (chessGame, ignored) -> start(chessGame));
+    commands.put(Command.END, (chessGame, ignored) -> end(chessGame));
+    commands.put(Command.STATUS, (chessGame, ignored) -> status(chessGame));
+    commands.put(Command.MOVE, this::movePiece);
+  }
 
-    while (receivedCommand == null) {
-      try {
-        String initialCommandInput = inputView.receiveCommand();
-        receivedCommand = commandFactory.createCommand(initialCommandInput);
-        if (receivedCommand.validateInitialCommandType()) {
-          break;
-        }
-        System.out.println(ErrorMessage.INVALID_INITIAL_COMMAND.getMessage());
-        receivedCommand = null;
-      } catch (IllegalArgumentException exception) {
-        System.out.println(exception.getMessage());
-      }
+  private void start(ChessGame chessGame) {
+    chessGame.start();
+  }
+
+  private void end(ChessGame chessGame) {
+    chessGame.end();
+  }
+
+  private void status(ChessGame chessGame) {
+    final Double whiteScore = chessGame.calculateScore(Color.WHITE);
+    final Double blackScore = chessGame.calculateScore(Color.BLACK);
+    printScoreAndWinningColor(whiteScore, blackScore);
+  }
+
+  private void movePiece(ChessGame chessGame, List<String> commandParts) {
+    final Position source = parsePosition(commandParts.get(SOURCE_POSITION_INDEX));
+    final Position target = parsePosition(commandParts.get(TARGET_POSITION_INDEX));
+    chessGame.movePiece(source, target);
+    chessGameService.updatePiece(chessGame, source, target);
+  }
+
+  public void run() throws SQLException {
+    ChessGame chessGame = initializeChessGame(receiveInitialCommand());
+
+    while (isRunnable(chessGame)) {
+      printChessBoard(chessGame);
+      executeCommand(chessGame);
     }
+    processIfKingCaptured(chessGame);
+  }
 
-    receivedCommand.execute(this);
+  private boolean isRunnable(ChessGame chessGame) {
+    return chessGame.getState().equals(State.RUN)
+        || chessGame.getState().equals(State.START);
+  }
 
-    while (isRunning) {
-      try {
-        String commandInput = inputView.receiveCommand();
-        receivedCommand = commandFactory.createCommand(commandInput);
-        if (receivedCommand.validateStatusCommandType()) {
-          receivedCommand.execute(this);
-          continue; // 명령이 status 일 경우 턴을 바꾸지 않음
-        }
-        receivedCommand.execute(this);
-        currentTurn = currentTurn.changeTurn();
-      } catch (IllegalArgumentException exception) {
-        System.out.println(exception.getMessage());
-      }
+  private void processIfKingCaptured(final ChessGame chessGame) {
+    if (chessGame.getState().equals(State.CHECKMATE)) {
+      final Color winner = chessGame.getTurn();
+      outputView.printWinningColor(winner);
     }
   }
 
-  public void startGame() {
-    outputView.printBoard(board.getMap());
-  }
-
-  public void endGame() {
-    isRunning = false;
-  }
-
-  public void movePiece(Position source, Position target) {
-    Piece capturedPiece = board.move(source, target, currentTurn);
-    checkAndHandleKingCapture(capturedPiece, currentTurn);
-    outputView.printBoard(board.getMap());
-  }
-
-  public void calculateAndPrintCurrentTurnScore() {
-    double score = ScoreCalculator.calculate(board.getMap(), currentTurn);
-    outputView.printCurrentTurnScore(currentTurn, score);
-  }
-
-  public void printScoreAndWinningColor() {
-    double currentTurnScore = ScoreCalculator.calculate(board.getMap(), currentTurn);
-    double opponentScore = ScoreCalculator.calculate(board.getMap(), currentTurn.changeTurn());
-    outputView.printCurrentScore(currentTurn, currentTurnScore);
-    outputView.printCurrentScore(currentTurn.changeTurn(), opponentScore);
-    if (currentTurnScore > opponentScore) {
-      outputView.printWinningColor(currentTurn);
+  private void executeCommand(ChessGame chessGame) {
+    try {
+      outputView.printCommandMessage();
+      final List<String> commandParts = List.of(inputView.receiveCommand().split(" "));
+      final Command command = Command.findCommand(commandParts.get(COMMAND_INDEX));
+      commands.get(command).accept(chessGame, commandParts);
+    } catch (IllegalArgumentException e) {
+      outputView.printErrorMessage(e);
+      executeCommand(chessGame);
     }
-    if (opponentScore > currentTurnScore) {
-      outputView.printWinningColor(currentTurn.changeTurn());
+  }
+
+  private void printChessBoard(final ChessGame chessGame) {
+    if (chessGame.getState().equals(State.RUN)) {
+      outputView.printBoard(chessGame.getBoard().getMap());
     }
-    if (currentTurnScore == opponentScore) {
+  }
+
+  private InitialCommand receiveInitialCommand() {
+    try {
+      outputView.printInitialMessage();
+      final String command = inputView.receiveCommand();
+      return InitialCommand.findCommand(command);
+    } catch (IllegalArgumentException e) {
+      outputView.printErrorMessage(e);
+      return receiveInitialCommand();
+    }
+  }
+
+  private ChessGame initializeChessGame(InitialCommand command) throws SQLException {
+    ChessGame chessGame = findChessGameIfContinue(command);
+
+    if (chessGame == null) {
+      outputView.printNewGameMessage();
+      chessGameService.deleteChessGame();
+      chessGame = chessGameService.initializeChessGame();
+    }
+    return chessGame;
+  }
+
+  private ChessGame findChessGameIfContinue(final InitialCommand command) throws SQLException {
+    ChessGame chessGame = null;
+    if (command.equals(InitialCommand.CONTINUE)) {
+      chessGame = chessGameService.findChessGame();
+      printContinueMessage(chessGame);
+    }
+    return chessGame;
+  }
+
+  private void printContinueMessage(final ChessGame chessGame) {
+    if (chessGame == null) {
+      outputView.printNoExistsRunningGameMessage();
+    }
+    outputView.printContinueMessage();
+  }
+
+  private void printScoreAndWinningColor(Double whiteScore, Double blackScore) {
+    outputView.printScore(whiteScore, blackScore);
+    if (whiteScore > blackScore) {
+      outputView.printWinningColor(Color.WHITE);
+    }
+    if (whiteScore < blackScore) {
+      outputView.printWinningColor(Color.BLACK);
+    }
+    if (whiteScore.equals(blackScore)) {
       outputView.printDraw();
     }
   }
 
-  private void checkAndHandleKingCapture(Piece capturedPiece, Color currentTurn) {
-    if (capturedPiece != null && capturedPiece.pieceType() == PieceInfo.KING) {
-      endGame();
-      double currentTurnScore = ScoreCalculator.calculate(board.getMap(), currentTurn);
-      outputView.printCurrentScore(currentTurn, currentTurnScore);
-      outputView.printWinningColor(currentTurn);
-    }
+  private static Position parsePosition(String position) {
+    int file = position.charAt(0) - 'a' + 1;
+    int rank = position.charAt(1) - '0';
+    return new Position(file, rank); // 생성자에 1~8 유효성 검사가 있다
   }
 }

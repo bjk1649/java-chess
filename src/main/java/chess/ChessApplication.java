@@ -1,22 +1,24 @@
 package chess;
 
 import chess.controller.ChessController;
-import chess.model.command.CommandFactory;
-import chess.model.board.InitialBoard;
+import chess.dao.chessGame.JdbcChessGameDao;
+import chess.dao.piece.JdbcPieceDao;
+import chess.service.ChessGameService;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.sql.SQLException;
 
 public class ChessApplication {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws SQLException {
 
+    final JdbcChessGameDao chessGameDao = new JdbcChessGameDao();
+    final JdbcPieceDao PieceDao = new JdbcPieceDao();
+    final ChessGameService chessGameService = new ChessGameService(chessGameDao, PieceDao);
     InputView inputView = new InputView();
     OutputView outputView = new OutputView();
-    CommandFactory commandFactory = new CommandFactory();
-    InitialBoard initialBoard = new InitialBoard();
+    final ChessController chessController = new ChessController(chessGameService, inputView, outputView);
 
-    ChessController chessController = new ChessController(inputView, outputView, commandFactory,
-        initialBoard);
-    chessController.runChess();
+    chessController.run();
   }
 }
