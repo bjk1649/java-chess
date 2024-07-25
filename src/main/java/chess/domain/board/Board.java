@@ -54,4 +54,8 @@ public class Board {
   public Map<Position, Piece> getMap() {
     return Map.copyOf(board);
   }
+
+  public Piece getPiece(Position position) {
+    return board.get(position);
+  }
 }
