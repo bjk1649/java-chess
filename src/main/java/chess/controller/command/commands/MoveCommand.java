@@ -38,7 +38,7 @@ public class MoveCommand implements Command {
   }
 
   private void processIfKingCaptured(final ChessGame chessGame) {
-    if (chessGame.getState().equals(State.CHECKMATE)) {
+    if (chessGame.getState().equals(State.KING_IS_CAPTURED)) {
       final Color winner = chessGame.getTurn();
       OutputView.printWinningColor(winner);
     }

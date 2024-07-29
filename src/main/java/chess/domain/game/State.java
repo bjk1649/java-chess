@@ -4,5 +4,5 @@ public enum State {
   WAITING,
   RUNNING,
   ENDED,
-  CHECKMATE
+  KING_IS_CAPTURED
 }

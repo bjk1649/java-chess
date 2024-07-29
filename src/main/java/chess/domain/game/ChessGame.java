@@ -32,8 +32,8 @@ public class ChessGame {
     this.state = State.ENDED;
   }
 
-  public void checkmate() {
-    this.state = State.CHECKMATE;
+  public void kingIsCaptured() {
+    this.state = State.KING_IS_CAPTURED;
   }
 
   public void movePiece(Position source, Position target) {
@@ -57,7 +57,7 @@ public class ChessGame {
 
   private void checkKingCaptured(Piece capturedPiece) {
     if (capturedPiece != null && capturedPiece.pieceType() == PieceInfo.KING) {
-      checkmate();
+      kingIsCaptured();
     }
   }
 
