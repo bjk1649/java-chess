@@ -43,12 +43,12 @@ public class ChessGameService {
     return chessGame;
   }
 
-  public void updatePiece(final ChessGame chessGame, final Position sourcePosition, final Position targetPosition) {
-    final Piece piece = chessGame.getBoard().getPiece(targetPosition);
+  public void updatePiece(final ChessGame chessGame, final Position fromPosition, final Position toPosition) {
+    final Piece piece = chessGame.getBoard().getPiece(toPosition);
 
-    pieceDao.delete(chessGame.getId(), targetPosition);
-    pieceDao.insert(chessGame.getId(), targetPosition, piece);
-    pieceDao.delete(chessGame.getId(), sourcePosition);
+    pieceDao.delete(chessGame.getId(), toPosition);
+    pieceDao.insert(chessGame.getId(), toPosition, piece);
+    pieceDao.delete(chessGame.getId(), fromPosition);
     chessGameDao.updateTurn(chessGame.getId(), chessGame.getTurn());
   }
 
