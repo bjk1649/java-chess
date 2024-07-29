@@ -20,6 +20,6 @@ public class StartCommand implements Command {
 
   @Override
   public ChessGame initializeChessGame(final ChessGameService chessGameService) {
-    return null;
+    throw new UnsupportedOperationException();
   }
 }

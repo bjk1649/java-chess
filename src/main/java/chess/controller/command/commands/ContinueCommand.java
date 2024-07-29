@@ -19,5 +19,7 @@ public class ContinueCommand implements Command {
   }
 
   @Override
-  public void execute(ChessGameService chessGameService) {}
+  public void execute(ChessGameService chessGameService) {
+    throw new UnsupportedOperationException();
+  }
 }

@@ -29,7 +29,7 @@ public class ChessController {
     try {
       Command command = CommandFactory.createCommand(chessGame, InputView.receiveCommand());
       command.execute(chessGameService);
-    } catch (IllegalArgumentException e) {
+    } catch (IllegalArgumentException | UnsupportedOperationException e) {
       OutputView.printErrorMessage(e);
       executeCommand(chessGame);
     }
@@ -39,7 +39,7 @@ public class ChessController {
     try {
       Command command = CommandFactory.createInitialCommand(InputView.receiveInitialCommand());
       return command.initializeChessGame(chessGameService);
-    } catch (IllegalArgumentException e) {
+    } catch (IllegalArgumentException | UnsupportedOperationException e) {
       OutputView.printErrorMessage(e);
       return executeInitialCommandAndFetchChessGame();
     }
