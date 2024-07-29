@@ -1,0 +1,64 @@
+package chess.domain.piece;
+
+import chess.domain.movement.Movement;
+import chess.domain.movement.Path;
+import chess.domain.position.Color;
+import chess.domain.position.Position;
+import chess.domain.ErrorMessage;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+public abstract class Piece {
+
+  private final Color color;
+
+  public Piece(final Color color) {
+    this.color = color;
+  }
+
+  public abstract Path findPath(Position from, Position to, Map<Position, Piece> board);
+
+  public abstract PieceInfo pieceType();
+
+  public void validateMovement(final Movement movement, List<Movement> availableMovements) {
+    if (!availableMovements.contains(movement)) {
+      throw new IllegalArgumentException(ErrorMessage.INVALID_DIRECTION.getMessage());
+    }
+  }
+
+  public void validateSameColor(Piece other) {
+    if (other == null) { // 타겟 위치에 말이 없을 경우
+      return;
+    }
+    if (color.isSameColor(other.color)) {
+      throw new IllegalArgumentException(ErrorMessage.SAME_COLOR_PIECE.getMessage());
+    }
+  }
+
+  public void validateTurn(Color turn) {
+    if (color != turn) {
+      throw new IllegalArgumentException(ErrorMessage.INVALID_TURN.getMessage());
+    }
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Piece piece)) {
+      return false;
+    }
+    return color == piece.color;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(color, getClass());
+  }
+
+  public Color getColor() {
+    return color;
+  }
+}

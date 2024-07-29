@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.model.ErrorMessage;
-import chess.model.piece.Piece;
-import chess.model.piece.pieces.*;
-import chess.model.position.Color;
+import chess.domain.ErrorMessage;
+import chess.domain.piece.Piece;
+import chess.domain.piece.pieces.*;
+import chess.domain.position.Color;
 
 public enum Symbol {
   KING("k", King.class),

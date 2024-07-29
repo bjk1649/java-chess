@@ -1,0 +1,30 @@
+package chess.domain;
+
+public enum ErrorMessage {
+  INVALID_INITIAL_COMMAND("[ERROR] 이어하기는 continue, 새로하기는 new 입니다."),
+  MISMATCH_FILE_ARGUMENT("[ERROR] 잘못된 파일 규격입니다."),
+  MISMATCH_RANK_ARGUMENT("[ERROR] 잘못된 랭크 규격입니다."),
+  MISMATCH_SYMBOL("[ERROR] 잘못된 피스 타입입니다."),
+  HAS_OBSTACLE("[ERROR] 경로에 다른 체스 말이 존재합니다."),
+  NO_PIECE_AT_SOURCE("[ERROR] 출발점에 말이 없습니다."),
+  INVALID_TURN("[ERROR] 차례에 맞는 말을 선택해야 합니다."),
+
+  INVALID_DIRECTION("[ERROR] 이동할 수 없는 방향입니다."),
+  SAME_COLOR_PIECE("[ERROR] 같은 색의 말로는 이동할 수 없습니다."),
+  SAME_POSITION("[ERROR] 출발지와 목적지가 동일하여 이동할 수 없습니다."),
+  INVALID_MOVE_COMMAND("[ERROR] 이동은 move source 위치 target 위치여야 합니다."),
+  INVALID_COMMAND("[ERROR] 유효하지 않은 명령입니다."),
+
+  ALREADY_START("[ERROR] 이미 진행 중인 게임입니다."),
+  NOT_RUNNING("[ERROR] 진행 중인 게임이 아닙니다.");
+
+  private final String message;
+
+  ErrorMessage(String message) {
+    this.message = message;
+  }
+
+  public String getMessage() {
+    return message;
+  }
+}

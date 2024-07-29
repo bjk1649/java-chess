@@ -1,90 +1,52 @@
 package chess.controller;
 
-import chess.model.command.CommandFactory;
-import chess.model.command.CommandLauncher;
-import chess.model.ErrorMessage;
-import chess.model.board.Board;
-import chess.model.board.InitialBoard;
-import chess.model.piece.Piece;
-import chess.model.piece.PieceInfo;
-import chess.model.position.Color;
-import chess.model.position.Position;
-import chess.model.score.ScoreCalculator;
+import chess.controller.command.CommandFactory;
+import chess.controller.command.commands.Command;
+import chess.domain.game.ChessGame;
+import chess.domain.game.State;
+import chess.service.ChessGameService;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.sql.SQLException;
 
 public class ChessController {
 
-  private final InputView inputView;
-  private final OutputView outputView;
-  private final CommandFactory commandFactory;
-  private final Board board;
-  private Color currentTurn;
-  private boolean isRunning;
+  private final ChessGameService chessGameService;
 
-  public ChessController(InputView inputView, OutputView outputView, CommandFactory commandFactory, InitialBoard initialBoard) {
-    this.inputView = inputView;
-    this.outputView = outputView;
-    this.commandFactory = commandFactory;
-    this.board = initialBoard.createInitialBoard();
-    this.currentTurn = Color.WHITE;
-    this.isRunning = true;
+  public ChessController(ChessGameService chessGameService) {
+    this.chessGameService = chessGameService;
   }
 
-  public void runChess() {
-    outputView.printStartMessage();
-    CommandLauncher receivedCommand = null;
+  public void run() throws SQLException {
+    ChessGame chessGame = executeInitialCommandAndFetchChessGame();
 
-    while (receivedCommand == null) {
-      try {
-        String initialCommandInput = inputView.receiveCommand();
-        receivedCommand = commandFactory.createCommand(initialCommandInput);
-        if (receivedCommand.validateInitialCommandType()) {
-          break;
-        }
-        System.out.println(ErrorMessage.INVALID_INITIAL_COMMAND.getMessage());
-        receivedCommand = null;
-      } catch (IllegalArgumentException exception) {
-        System.out.println(exception.getMessage());
-      }
-    }
-
-    receivedCommand.execute(this);
-
-    while (isRunning) {
-      try {
-        String commandInput = inputView.receiveCommand();
-        receivedCommand = commandFactory.createCommand(commandInput);
-        if (receivedCommand.validateStatusCommandType()) {
-          calculateAndPrintCurrentTurnScore();
-        } else {
-          receivedCommand.execute(this);
-          currentTurn = currentTurn.changeTurn(currentTurn);
-        }
-      } catch (IllegalArgumentException exception) {
-        System.out.println(exception.getMessage());
-      }
+    while (isRunnable(chessGame)) {
+      executeCommand(chessGame);
     }
   }
 
-  public void startGame() {
-    outputView.printBoard(board.getMap());
-  }
-
-  public void endGame() {
-    isRunning = false;
-  }
-
-  public void movePiece(Position source, Position target) {
-    Piece capturedPiece = board.move(source, target, currentTurn);
-    if (capturedPiece != null && capturedPiece.pieceType() == PieceInfo.KING) {
-      endGame();
+  private void executeCommand(ChessGame chessGame) {
+    try {
+      Command command = CommandFactory.createCommand(chessGame, InputView.receiveCommand());
+      command.execute(chessGameService);
+    } catch (IllegalArgumentException | UnsupportedOperationException e) {
+      OutputView.printErrorMessage(e);
+      executeCommand(chessGame);
     }
-    outputView.printBoard(board.getMap());
   }
 
-  public void calculateAndPrintCurrentTurnScore() {
-    double score = ScoreCalculator.calculate(board.getMap(), currentTurn);
-    outputView.printCurrentTurnScore(currentTurn, score);
+  private ChessGame executeInitialCommandAndFetchChessGame() throws SQLException {
+    try {
+      Command command = CommandFactory.createInitialCommand(InputView.receiveInitialCommand());
+      return command.initializeChessGame(chessGameService);
+    } catch (IllegalArgumentException | UnsupportedOperationException e) {
+      OutputView.printErrorMessage(e);
+      return executeInitialCommandAndFetchChessGame();
+    }
+  }
+
+  private boolean isRunnable(ChessGame chessGame) {
+    return chessGame.getState().equals(State.RUNNING)
+        || chessGame.getState().equals(State.WAITING);
   }
 }
