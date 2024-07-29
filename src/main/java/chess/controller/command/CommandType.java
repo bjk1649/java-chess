@@ -3,21 +3,23 @@ package chess.controller.command;
 import chess.domain.ErrorMessage;
 import java.util.Arrays;
 
-public enum Command {
+public enum CommandType {
   START("start"),
   END("end"),
   STATUS("status"),
-  MOVE("move");
+  MOVE("move"),
+  NEW("new"),
+  CONTINUE("continue");
 
   private final String command;
 
-  Command(final String command) {
+  CommandType(final String command) {
     this.command = command;
   }
 
-  public static Command findCommand(final String value) {
+  public static CommandType findCommand(final String value) {
     return Arrays.stream(values())
-                 .filter(command -> command.command.equals(value))
+                 .filter(commandType -> commandType.command.equals(value))
                  .findAny()
                  .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_COMMAND.getMessage()));
   }

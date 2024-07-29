@@ -27,9 +27,6 @@ public class ChessGameService {
 
   public ChessGame findChessGame() throws SQLException {
     final FindResponseDto findResponseDto = chessGameDao.findChessGameById(TEMPORAL_ID);
-    if (findResponseDto == null) {
-      return null;
-    }
     return new ChessGame(findResponseDto.getId(),
         new Board(pieceDao.putPiecesById(TEMPORAL_ID)), findResponseDto.getTurn());
   }

@@ -1,21 +1,25 @@
 package chess.controller.command.commands;
 
-import chess.controller.ChessController;
+import chess.domain.game.ChessGame;
+import chess.service.ChessGameService;
+import chess.view.OutputView;
 
-public class StartCommand implements CommandLauncher {
+public class StartCommand implements Command {
 
-  @Override
-  public void execute(ChessController controller) {
-    // start
+  private final ChessGame chessGame;
+
+  public StartCommand(ChessGame chessGame) {
+    this.chessGame = chessGame;
   }
 
   @Override
-  public boolean validateInitialCommandType() {
-    return true;
+  public void execute(final ChessGameService chessGameService) {
+    chessGame.start();
+    OutputView.printBoard(chessGame.getBoard().getMap());
   }
 
   @Override
-  public boolean validateStatusCommandType() {
-    return false;
+  public ChessGame initializeChessGame(final ChessGameService chessGameService) {
+    return null;
   }
 }
