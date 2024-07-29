@@ -76,30 +76,6 @@ class PawnTest {
             to);
   }
 
-  @ParameterizedTest
-  @CsvSource({
-      "2, 2, 3, 3, WHITE",
-      "2, 2, 1, 3, WHITE",
-      "2, 7, 3, 6, BLACK",
-      "2, 7, 1, 6, BLACK"
-  })
-  @DisplayName("폰은_대각선으로_한_칸_움직여_적을_공격할_수_있다")
-  void 폰은_대각선으로_한_칸_움직여_적을_공격할_수_있다(int fromFile, int fromRank, int toFile, int toRank, Color color) {
-    // given
-    Pawn pawn = new Pawn(color);
-    Position from = new Position(fromFile, fromRank);
-    Position to = new Position(toFile, toRank);
-    Map<Position, Piece> board = BoardFactory.createInitialBoard().getMap();
-
-    // when
-    Path path = pawn.findPath(from, to, board);
-
-    // then
-    assertThat(path)
-        .extracting("positions", InstanceOfAssertFactories.list(Position.class))
-        .containsExactly(to);
-  }
-
   @Test
   @DisplayName("폰이_뒤로_움직인다면_예외_처리한다")
   void 폰이_뒤로_움직인다면_예외_처리한다() {
@@ -122,6 +98,27 @@ class PawnTest {
     Pawn pawn = new Pawn(Color.WHITE);
     Position from = new Position(2, 3);
     Position to = new Position(2, 5);
+    Map<Position, Piece> board = BoardFactory.createInitialBoard().getMap();
+
+    // when & then
+    assertThatThrownBy(() -> pawn.findPath(from, to, board))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining(ErrorMessage.INVALID_DIRECTION.getMessage());
+  }
+
+  @ParameterizedTest
+  @CsvSource({
+      "2, 2, 3, 3, WHITE",
+      "2, 2, 1, 3, WHITE",
+      "2, 7, 3, 6, BLACK",
+      "2, 7, 1, 6, BLACK"
+  })
+  @DisplayName("폰이_대각선으로_움직이려할_때_적이_없으면_예외_처리한다")
+  void 폰이_대각선으로_움직이려할_때_적이_없으면_예외_처리한다(int fromFile, int fromRank, int toFile, int toRank, Color color) {
+    // given
+    Pawn pawn = new Pawn(color);
+    Position from = new Position(fromFile, fromRank);
+    Position to = new Position(toFile, toRank);
     Map<Position, Piece> board = BoardFactory.createInitialBoard().getMap();
 
     // when & then
